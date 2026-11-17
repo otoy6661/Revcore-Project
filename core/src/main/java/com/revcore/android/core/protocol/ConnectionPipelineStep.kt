@@ -1,0 +1,14 @@
+package com.revcore.android.core.protocol
+
+enum class ConnectionPipelineStep {
+    ADAPTER_DETECTED,
+    PERMISSION_GRANTED,
+    INTERFACE_CLAIMED,
+    FTDI_INITIALIZED,
+    TRANSFER_LAYER_ACTIVE,
+    KLINE_ATTEMPTED,
+    ECU_RESPONSE_RECEIVED,
+    PROTOCOL_INITIALIZED,
+    DIAGNOSTIC_READY,
+    FLASH_VERIFIED
+}

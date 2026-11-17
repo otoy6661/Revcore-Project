@@ -1,0 +1,42 @@
+{
+  "catatan": "Semua frame di bawah adalah contoh sintetis yang dibentuk dari katalog protokol RevCore. Bukan hasil tangkapan ECU nyata. Tabel live data 0x7A juga sintetis dan bukan tabel ECU; tabel live data Honda bawaan tidak disertakan karena hak penggunaannya belum jelas.",
+  "format": "[header][declared length][service/table][parameter...][checksum]",
+  "baudRate": 10400,
+  "frames": [
+    {
+      "nama": "tester.present",
+      "hex": "FE 04 72 8C",
+      "arti": "Pulsa kehadiran tester pada header broadcast 0xFE, service 0x72."
+    },
+    {
+      "nama": "id.00F0",
+      "hex": "72 05 00 F0 99",
+      "arti": "Query identifikasi baseline service 0x00, subfungsi 0xF0."
+    },
+    {
+      "nama": "id.7200",
+      "hex": "72 07 72 00 00 05 10",
+      "arti": "Query identifikasi baseline service 0x72 dengan parameter 0x00 0x00 0x05."
+    },
+    {
+      "nama": "id.7100",
+      "hex": "72 05 71 00 18",
+      "arti": "Query identifikasi/part number service 0x71."
+    },
+    {
+      "nama": "live.table.7A.synthetic",
+      "hex": "72 05 71 7A 9E",
+      "arti": "Permintaan tabel live data sintetis 0x7A yang dipakai di examples/sensor_data/live_data.json. Bukan tabel ECU Honda; byte terakhir adalah checksum, bukan parameter."
+    },
+    {
+      "nama": "dtc.read.7401",
+      "hex": "72 05 74 01 14",
+      "arti": "Permintaan baca DTC baseline service 0x74, subfungsi 0x01."
+    },
+    {
+      "nama": "dtc.clear.6001",
+      "hex": "72 05 60 01 28",
+      "arti": "Permintaan hapus DTC baseline service 0x60, subfungsi 0x01."
+    }
+  ]
+}

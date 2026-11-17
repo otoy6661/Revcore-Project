@@ -1,0 +1,30 @@
+{
+  "catatan": "Contoh sintetis untuk menguji parser DTC. Kode yang dipakai adalah kode standar SAE yang juga ada di tabel referensi RevCore.",
+  "request": {
+    "hex": "72 05 74 01 14",
+    "arti": "Baca DTC baseline."
+  },
+  "contohRespons": [
+    {
+      "nama": "dua_kode",
+      "frameHex": "72 0A 74 01 02 01 01 07 01 03",
+      "layout": "[header][len][service 0x74][subfungsi 0x01][count 0x02][0x01 0x01][0x07 0x01][checksum]",
+      "hasil": [
+        { "blinkCode": 1, "subCode": 1, "standardCode": "P0107" },
+        { "blinkCode": 7, "subCode": 1, "standardCode": "P0117" }
+      ],
+      "arti": "Dua pasangan kode; setiap pasangan adalah (kode, subkode)."
+    },
+    {
+      "nama": "negatif",
+      "frameHex": "72 06 7F 74 12 83",
+      "arti": "ECU menolak permintaan baca DTC. Hasil harus dilaporkan sebagai penolakan, bukan daftar kosong yang dianggap sukses."
+    }
+  ],
+  "aturan": [
+    "Frame harus checksum-valid dan panjang deklarasi cocok.",
+    "Pasangan 0x0000 dan 0xFFFF diabaikan.",
+    "Kode yang tidak ada di tabel referensi ditampilkan sebagai kode mentah, bukan ditebak.",
+    "Hapus DTC hanya dianggap berhasil jika pembacaan ulang benar-benar kosong."
+  ]
+}

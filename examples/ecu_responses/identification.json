@@ -1,0 +1,31 @@
+{
+  "catatan": "Respons identifikasi sintetis. ID 'SAMPLE01' hanya untuk demonstrasi parser dan tidak terkait kendaraan nyata.",
+  "contoh": [
+    {
+      "nama": "identification_ascii",
+      "frameHex": "72 0C 71 53 41 4D 50 4C 45 30 31 EE",
+      "header": "0x72",
+      "declaredLength": 12,
+      "service": "0x71",
+      "payloadHex": "53 41 4D 50 4C 45 30 31",
+      "payloadAscii": "SAMPLE01",
+      "identifier": "SAMPLE01",
+      "extraction": "payload-ascii",
+      "checksum": "0xEE"
+    },
+    {
+      "nama": "negative_response",
+      "frameHex": "72 06 7F 74 12 83",
+      "header": "0x72",
+      "service": "0x7F",
+      "arti": "Frame valid secara checksum, tetapi ECU menolak operasi. Service negatif tidak boleh dianggap sebagai identitas."
+    }
+  ],
+  "aturanParser": [
+    "Panjang deklarasi harus sama dengan panjang frame.",
+    "Checksum additive 8-bit harus cocok.",
+    "Payload kosong atau seluruhnya 0x00/0xFF ditolak.",
+    "Payload printable ASCII dipakai verbatim; selain itu direpresentasikan sebagai hex.",
+    "Tidak ada pemotongan byte awal atau akhir payload."
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "catatan": "Payload sintetis untuk satu tabel live data contoh (0x7A). Tabel ini dibuat untuk repository ini, bukan tabel ECU Honda, dan tidak membuktikan kompatibilitas ECU. Tidak ada tabel live data bawaan yang dikirim oleh :core sampai hak penggunaan tabel Honda diselesaikan.",
+  "syntheticTable7A": {
+    "label": "RevCore synthetic live-data example (table 0x7A)",
+    "verification": "REFERENCE",
+    "requestHex": "72 05 71 7A 9E",
+    "responseHex": "72 11 71 7A 0B B8 80 40 50 40 00 64 F0 3C 5A C8 CD",
+    "payloadHex": "0B B8 80 40 50 40 00 64 F0 3C 5A C8",
+    "decode": {
+      "rpm": 3000,
+      "tpsAdc": 128,
+      "tpsPercent": 50.196,
+      "tpsVoltageV": 2.5098,
+      "tpsDegrees": 64,
+      "ectC": 40,
+      "iatC": 24,
+      "mapKpa": 100,
+      "batteryV": 12.0,
+      "speedKmh": 60,
+      "injectorMs": 2.0
+    },
+    "catatanDecode": "Payload dimulai pada byte frame ke-5 (setelah header 0x72, panjang, service 0x71, dan echo tabel 0x7A). ECT dibaca dari payload byte 5 dengan bias -40 C; payload byte 11 berisi 0x5A sebagai byte ECT alternatif dan hanya dipakai bila byte utama bernilai 0xFF, sehingga pada contoh ini 0x5A diabaikan. TPS persen = 128 * 100 / 255 dan tegangan TPS = 128 * 5 / 255. AFR/lambda tidak dihitung karena ECU hanya mempublikasikan tegangan O2 narrowband pada profil yang memiliki field tersebut; pada contoh ini tidak ada field O2 sehingga AFR tetap UNSUPPORTED."
+  }
+}

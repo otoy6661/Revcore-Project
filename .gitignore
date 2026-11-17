@@ -1,0 +1,27 @@
+# Local machine configuration
+local.properties
+
+# Gradle / Android build output
+.gradle/
+build/
+**/build/
+.kotlin/
+
+# IDE
+.idea/
+*.iml
+
+# Signing material and secrets (must never be committed)
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.pepk
+.env
+secrets.properties
+
+# Packaged binaries
+*.apk
+*.aab
+*.jar
+*.aar
