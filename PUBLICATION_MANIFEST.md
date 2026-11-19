@@ -25,6 +25,11 @@ APK tidak dienkripsi; tidak ada key yang diperlukan atau digunakan. Analisis dil
 
 Status:
 
+> **Catatan konsistensi (2026-11-19).** Penghitungan provenance di bagian ini berbeda
+> dengan `FINAL_PUBLICATION_READINESS.md` §6 dan `audit/SOURCE_MAPPING.md`. Angka-angka
+> tersebut belum direkonsiliasi terhadap proyek sumber dan tidak boleh dipakai sebagai
+> dasar audit baru. Perbedaan ini tercatat sebagai temuan terbuka.
+
 | Kelompok | Jumlah/status | Catatan |
 |---|---|---|
 | Source proyek pemilik tidak diubah | 42 file | `ORIGINAL`; termasuk `TuningLog.kt`, `CalibrationMap.kt`, `ModifiedBlock.kt` yang disalin utuh |

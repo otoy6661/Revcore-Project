@@ -1,5 +1,9 @@
 # FINAL PUBLICATION READINESS
 
+> **Catatan status (2026-11-19).** Repository sudah dipublikasikan sebagai rilis
+> `v0.3.0`. Istilah "staging" dan pernyataan "belum dipublikasikan" di dokumen ini
+> merujuk kondisi saat audit 2026-11-17 dan dipertahankan sebagai catatan sejarah.
+
 Tanggal audit: 2026-11-17
 Lokasi: `RevCore_Public_Developer_Repository/` (staging)
 Referensi perilaku: `RevCore build 161126.apk`, SHA-256 `b2b6c5bd68cc9c727c2babe0c510b928a6135fa7ef5e9d8847275887c8647432`
@@ -98,6 +102,11 @@ Tidak ada klaim bahwa semua protokol atau semua kendaraan didukung.
 
 ## 6. Provenance source
 
+> **Catatan konsistensi (2026-11-19).** Penghitungan provenance di bagian ini berbeda
+> dengan `PUBLICATION_MANIFEST.md` §2 dan `audit/SOURCE_MAPPING.md`. Angka-angka tersebut
+> belum direkonsiliasi terhadap proyek sumber dan tidak boleh dipakai sebagai dasar audit
+> baru. Perbedaan ini tercatat sebagai temuan terbuka.
+
 | Kelompok | Jumlah | Label |
 |---|---:|---|
 | Source utama identik dengan proyek | 39 | `ORIGINAL` |
@@ -121,6 +130,12 @@ Dijalankan pada 2026-11-17 dengan `ANDROID_HOME` eksternal dan Gradle 9.6.0 offl
 | `gradle --offline assembleDebug` | **BUILD SUCCESSFUL**; `core/build/outputs/aar/core-debug.aar` (540.273 byte, SHA-256 `9b5f478b104870ac8c993fe2cc5a8fff308ac44a634552cefd8e4c13349111ee`) |
 | `py tools/validate_fixtures.py --verbose` | **LULUS**; 14 frame valid, payload konsisten |
 | `py tools/validate_datasets.py --verbose --demo` | **LULUS**; 5 pemeriksaan, demo bilinear 1,34 |
+
+> **Catatan reproduksibilitas (2026-11-19).** Build ulang AAR pada 2026-11-19
+> menghasilkan 540.282 byte dengan SHA-256 `afac4d22ba8d7668ffbd75b62dc58a2b2156c38bcfe45f67e0599d5d1e53fe37`.
+> Perbedaan ini menunjukkan bahwa ukuran/hash AAR tidak reproducible byte-per-byte
+> (kemungkinan karena metadata arsip). Hash di tabel di atas adalah snapshot audit,
+> bukan jaminan build ulang.
 
 Verifikasi ini **tidak** menggunakan adapter atau ECU fisik. Tidak ada klaim bahwa protokol telah diuji pada kendaraan.
 

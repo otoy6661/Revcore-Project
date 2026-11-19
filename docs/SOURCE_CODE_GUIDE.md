@@ -34,8 +34,8 @@ com.revcore.android
 | `HondaFrameCodec.kt` | 92 | Konstanta header, build frame, validasi bentuk, strip echo, hex |
 | `KlineWireEngine.kt` | 453 | Wake pulse, transceive, retry, buffer RX, pemilihan frame |
 | `EcuSessionManager.kt` | 178 | Lifecycle sesi, mutex transaksi, deteksi family, snapshot |
-| `HondaEcuProfiles.kt` | 403 | Katalog request per family, wake timing, katalog kosong untuk family yang belum terbukti |
-| `LiveDataProfile.kt` | 520 | Layout tabel, parser payload, state parameter |
+| `HondaEcuProfiles.kt` | 313 | Katalog request per family, wake timing, katalog kosong untuk family yang belum terbukti |
+| `LiveDataProfile.kt` | 282 | Layout tabel, parser payload, state parameter |
 | `LivePollPolicy.kt` | 26 | Interval polling dan backoff |
 | `EcuFamily.kt` | 43 | Enum family dan resolver header respons |
 | `Evidence.kt` | 143 | Registry status bukti elemen komunikasi |
@@ -44,7 +44,7 @@ com.revcore.android
 
 | File | Baris | Peran |
 |---|---:|---|
-| `HondaProtocolEngine.kt` | 1824 | API utama: connect, wake, identify, live, DTC, clear |
+| `HondaProtocolEngine.kt` | 1787 | API utama: connect, wake, identify, live, DTC, clear |
 | `KlinePacket.kt` | 110 | Model paket, konstanta service/header, parse dasar |
 | `KlineTransceiver.kt` | 471 | Implementasi transceiver alternatif dengan outcome dan diagnostik |
 | `KlineEchoFilter.kt` | 130 | Filter echo berbasis buffer |
@@ -57,7 +57,7 @@ com.revcore.android
 | `LiveTelemetry.kt` | 66 | Model telemetry dan state |
 | `CommunicationSniffer.kt` | 307 | Event, statistik, timeline diagnostik |
 | `SingleFlightGate.kt` | 30 | Gate operasi tunggal |
-| `LegacyHondaProtocolEngine.kt` | 1317 | Engine lama; referensi rollback, bukan jalur utama |
+| `legacy/LegacyHondaProtocolEngine.kt` | 1203 | Engine lama; referensi rollback, bukan jalur utama |
 
 ### 3.3 `core/usb` dan `core/ftdi`
 

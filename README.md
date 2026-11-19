@@ -4,6 +4,14 @@ Repository developer untuk mempelajari dan mengembangkan **Communication Engine*
 
 Repository ini ditujukan untuk kontributor, pelajar protokol diagnostik, dan pengembang aplikasi diagnostik mandiri yang ingin memakai atau memperluas lapisan komunikasi RevCore. Repository ini **bukan** source lengkap aplikasi RevCore dan **bukan** jaminan kompatibilitas kendaraan. Semua contoh data bersifat sintetis.
 
+## Mulai belajar
+
+Pemula total dapat memulai dari [education/README.md](education/README.md): jalur belajar
+Android/Kotlin/Gradle/Git, cara membangun APK, konsep aplikasi diagnostik, referensi
+protokol, katalog kegagalan, panduan AI, dan panduan kontributor. Proyek contoh yang
+dapat dijalankan ada di [samples/README.md](samples/README.md); contoh 01 menghasilkan
+APK debug yang sudah diverifikasi.
+
 > **Status penting**
 >
 > - Ini adalah repository rilis **v0.3.0**. Status paket dan unggahan dicatat di [FINAL_PUBLICATION_READINESS.md](FINAL_PUBLICATION_READINESS.md) §12.
@@ -92,6 +100,8 @@ RevCore_Public_Developer_Repository/
 │   ├── vehicle_db/               # template database kendaraan sintetis
 │   └── maps/                     # MAP sintetis 8x11
 ├── docs/                         # 24 dokumen developer (Bahasa Indonesia)
+├── education/                    # pusat pembelajaran: jalur, referensi, katalog kegagalan
+├── samples/                      # 16 contoh progresif; contoh 01 menghasilkan APK
 ├── tools/                        # validator fixture dan dataset
 └── audit/                        # inventaris, pemetaan, status, audit
 ```
@@ -117,13 +127,17 @@ py tools/validate_datasets.py --verbose --demo
 
 Jangan membuat `local.properties` yang berisi path pribadi di dalam repository. Gunakan variabel lingkungan `ANDROID_HOME` atau `sdk.dir` di luar repository. Rincian ada di [docs/BUILD_GUIDE.md](docs/BUILD_GUIDE.md) dan [docs/TESTING_GUIDE.md](docs/TESTING_GUIDE.md).
 
-Hasil verifikasi terakhir (2026-11-17):
+Hasil verifikasi terakhir (2026-11-19):
 
 - `clean test`: **BUILD SUCCESSFUL**, 153 test, 0 gagal, 0 error, 0 dilewati.
 - `assembleDebug`: **BUILD SUCCESSFUL**, menghasilkan `core/build/outputs/aar/core-debug.aar`.
-- `validate_fixtures.py`: semua frame dan payload sintetis konsisten.
+- `validate_fixtures.py`: 14 frame sintetis valid dan konsisten.
 - `validate_datasets.py`: 5 pemeriksaan dataset sintetis lulus.
 - Pengujian di atas **tidak** menggunakan hardware ECU. Tidak ada klaim bahwa protokol telah diverifikasi pada kendaraan.
+
+Perintah di atas membangun **AAR**, bukan APK. Contoh APK debug yang sudah diverifikasi
+ada di [samples/01-hello-android](samples/01-hello-android/README.md); langkah lengkapnya
+di [education/02-membangun-apk.md](education/02-membangun-apk.md).
 
 ## 5. Titik masuk utama
 
@@ -182,7 +196,7 @@ val outcome = wire.transceive(transport, request)
 
 - `CommunicationSniffer` mencatat TX/RX, error adapter, dan statistik sesi. Log tidak boleh memuat data pribadi.
 - `EcuSessionManager` dan `SingleFlightGate` mencegah transaksi bersamaan pada satu bus.
-- Hasil DTC membedakan `NO_RESPONSE`, `NEGATIVE_RESPONSE`, dan daftar kosong. Jangan menyamakan ketiganya.
+- Hasil DTC membedakan `NO_RESPONSE`, `UNRECOGNIZED`, `OK_EMPTY`, dan `OK_CODES`. Jangan menyamakan kegagalan dengan daftar kosong.
 - `queryLiveData()` mengembalikan `null` bila katalog profil kosong; tidak ada frame yang dikirim dan tidak ada nilai yang dikarang.
 
 ## 7. Menambah protokol secara mandiri
@@ -338,6 +352,8 @@ Developer boleh mengajukan permintaan berkas atau mengusulkan isi repository yan
 | [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) | Lisensi dependency langsung dan transitif |
 | [FINAL_PUBLICATION_READINESS.md](FINAL_PUBLICATION_READINESS.md) | Ringkasan kesiapan, audit, blocker, dan rekomendasi GO/NO-GO |
 | [tools/README.md](tools/README.md) | Pemakaian validator fixture dan dataset |
+| [education/README.md](education/README.md) | Pusat pembelajaran: jalur pemula, referensi, kegagalan, AI, kontributor |
+| [samples/README.md](samples/README.md) | 16 contoh progresif dari Hello Android sampai database sendiri |
 
 ## 15. Kontribusi dan persetujuan pemilik
 

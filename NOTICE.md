@@ -60,4 +60,7 @@ Jika menemukan materi yang berpotensi melanggar hak pihak ketiga atau membocorka
 
 ## 6. Persetujuan
 
-Publikasi repository, pembuatan ZIP final, dan unggahan ke GitHub memerlukan persetujuan pemilik setelah audit selesai. Dokumen ini tidak memberi izin publikasi.
+Repository ini telah dipublikasikan sebagai rilis **v0.3.0** oleh pemilik. Publikasi
+materi baru, perubahan lisensi, pembuatan ZIP rilis baru, unggahan APK, dan distribusi
+di luar repository tetap memerlukan persetujuan pemilik. Dokumen ini tidak memberi izin
+untuk mendistribusikan ulang materi atau APK.

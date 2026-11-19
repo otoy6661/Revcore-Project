@@ -112,7 +112,7 @@ Konsekuensi: pemanggil tidak perlu membuat mutex sendiri, tetapi tetap harus men
 | `connect()` false | Adapter tidak siap | ECU rusak |
 | `identifyEcu()` null tanpa frame | `NO_RESPONSE` | Kontak pasti OFF |
 | Frame valid tanpa ID | `ECU_RESPONDED`, `isEcuIdentified=false` | Model teridentifikasi |
-| `readDtcs()` `NoResponse` | `DTC_READ_CONFIRMED` tidak tercapai | Tidak ada DTC |
+| `readDtcs()` `NoResponse` | Status sesi `DTC_READ_CONFIRMED` tidak tercapai | Tidak ada DTC |
 | `queryLiveData()` null | `WAITING_RESPONSE`/`STALE` | Semua sensor nol |
 | `ignitionState=LINK_LOST` | Tidak ada balasan valid | Kontak OFF terbukti |
 

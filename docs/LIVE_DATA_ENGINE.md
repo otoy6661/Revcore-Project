@@ -35,7 +35,7 @@ Konsekuensi perilaku:
 Parser dan mekanisme polling tetap lengkap. Pemanggil dapat membuat `LiveTableProfile`
 miliknya sendiri, lalu:
 
-- memanggil `LiveDataFrameParser.parse(profile, frame)` secara langsung, atau
+- memanggil `LiveDataFrameParser.parse(payload, profile)` secara langsung, atau
 - mendaftarkan request frame pada `HondaWireProfile` yang dikendalikan pemanggil.
 
 Field penting pada `LiveTableProfile`:

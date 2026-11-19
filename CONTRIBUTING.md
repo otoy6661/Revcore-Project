@@ -134,4 +134,7 @@ Pisahkan dengan jelas: berhasil, gagal, tidak dapat dijalankan, dan membutuhkan 
 
 ## 11. Persetujuan
 
-Kontribusi mengikuti persetujuan pemilik. Repository belum boleh dipublikasikan, di-ZIP, atau diunggah ke GitHub tanpa persetujuan setelah audit.
+Repository ini sudah dipublikasikan sebagai rilis **v0.3.0**. Kontribusi tetap mengikuti
+persetujuan pemilik. Perubahan materi publik, pembuatan ZIP rilis baru, unggahan APK,
+atau distribusi di luar repository memerlukan persetujuan pemilik. Repository publik
+bukan izin untuk mendistribusikan ulang materi atau APK.

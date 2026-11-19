@@ -51,7 +51,7 @@ Prober kustom mendaftarkan VID/PID berikut:
 | Prolific PL2303 | `0x067B` | `0x2303` | `ProlificSerialDriver` |
 | Prolific lain | `0x067B` | `0x23A3` | `ProlificSerialDriver` |
 
-Prober default library tetap dijalankan sebagai fallback. Perangkat CDC-ACM yang dikenali library juga dapat terbuka meskipun VID-nya tidak ada di tabel kustom.
+Prober library dijalankan sebagai fallback untuk perangkat yang tidak ada di tabel kustom. Perangkat itu tidak memicu auto-connect; pembukaan hanya berhasil bila `prober.probeDevice()` mengenalinya.
 
 Catatan: `AdapterConnectionPolicy.SUPPORTED_VENDOR_IDS` hanya memuat `0x0403`, `0x1A86`, `0x10C4`, dan `0x067B`. VID CDC-ACM di luar daftar itu tidak memicu auto-connect, walau driver library mungkin tersedia.
 

@@ -164,6 +164,10 @@ sebagai solusi. Perbaiki resolusi dependensi atau gunakan cache Gradle lokal.
 
 - Tidak ada signing, `keystore`, atau `signingConfig` di repository ini.
 - Tidak ada build varian rilis, ProGuard/R8, atau APK aplikasi.
+- Contoh aplikasi minimal dengan APK debug terverifikasi ada di
+  `samples/01-hello-android`; langkahnya dijelaskan di
+  [education/02-membangun-apk.md](../education/02-membangun-apk.md). Contoh itu terpisah
+  dan tidak mengubah modul produksi.
 - `assembleDebug` hanya membuktikan pustaka dapat dikompilasi, bukan bahwa protokol
   berfungsi pada kendaraan.
 - Jangan mengunggah `build/`, `.gradle/`, atau AAR ke repository.

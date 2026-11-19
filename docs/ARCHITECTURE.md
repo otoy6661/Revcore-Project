@@ -83,7 +83,7 @@ request ByteArray
 identifyEcu()
   → wake pulse 70/130 ms @10400
   → tester present
-  → query ID 00/F0, 72/00, 71/00, probe live
+  → query ID 00/F0, 72/00, 71/00 (probe live nonaktif pada katalog publik)
   → jika tidak ada frame valid: ulang @9600
   → jika masih tidak ada: wake ulang + @10400
   → jika masih tidak ada: query 0x1A, lalu probe presence

@@ -1,5 +1,9 @@
 # ANALISIS APK
 
+> **Catatan status (2026-11-19).** Dokumen ini adalah catatan analisis yang ditulis
+> sebelum rilis `v0.3.0`. Repository sudah dipublikasikan; pernyataan tentang "staging"
+> atau "belum dipublikasikan" di bagian akhir dokumen merujuk kondisi saat audit.
+
 Dokumen ini merangkum analisis APK RevCore yang menjadi input reverse engineering. Isinya dibatasi pada metadata, struktur arsip, dan temuan yang diperlukan untuk menjelaskan modul publik. Source dan detail implementasi Application Layer serta Security/Integrity **tidak** didokumentasikan di sini.
 
 ## 1. Input analisis
