@@ -121,15 +121,14 @@ Komponen Application Layer lain tidak dirinci. Yang dicantumkan hanya minimum ya
 
 | Aset | Ukuran (byte) | Keputusan publikasi |
 |---|---:|---|
-| `assets/ecm_database.json` | 748.580 | **Tidak dipublikasikan.** Diganti 3 record sintetis di staging |
-| `assets/<profil pihak ketiga>.json` | 127.269 | **Tidak dipublikasikan.** Hak redistribusi belum terbukti |
-| `assets/<MAP pihak ketiga>/` | 162 `.map` + manifest | **Tidak dipublikasikan.** Materi pihak ketiga |
-| `assets/integrity_policy.json` | 37.630 | **Tidak dipublikasikan.** Security/Integrity |
-| `assets/ui_integrity_manifest.json` | 12.550 | **Tidak dipublikasikan.** Security/Integrity |
+| `assets/ecm_database.json` | 748.580 | Berkas mentah tidak disalin; build publik memakai 3 record sintetis. Database kompilasi RevCore dipublikasikan di `data/vehicle_database/` |
+| `assets/<profil pihak ketiga>.json` | 127.269 | Berkas mentah tidak disalin; profil hasil rekonstruksi RevCore dipublikasikan di `data/vehicle_database/ecm_profiles.json` |
+| `assets/<MAP pihak ketiga>/` | 162 `.map` + manifest | Berkas mentah tidak disalin; inventaris, hash, format, dan analisis dipublikasikan di `data/map_library/` |
+| Aset keamanan internal (2 berkas) | — | **Tidak dipublikasikan.** Nama dan ukuran tidak dicatat |
 | `assets/dexopt/baseline.prof` | 6.405 | Tidak relevan untuk repo |
 | `assets/dexopt/baseline.profm` | 761 | Tidak relevan untuk repo |
 
-Repo staging hanya membawa `ecm_database.json` sintetis dan contoh frame/sensor yang dibuat sendiri. Tidak ada aset APK asli yang disalin ke repo publik.
+Repo staging hanya membawa `ecm_database.json` sintetis dan contoh frame/sensor yang dibuat sendiri. Tidak ada aset APK asli, berkas MAP mentah, atau firmware yang disalin ke repo publik.
 
 ## 9. Obfuscation dan pemetaan
 

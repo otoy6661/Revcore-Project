@@ -1,16 +1,22 @@
 # SENSOR DECODING
 
+> **STATUS: DALAM TAHAP ANALISIS DAN PENGUJIAN**
+>
+> Tidak seluruh informasi telah dikonfirmasi melalui pengujian hardware. Informasi diperoleh dari beberapa sumber publik dan dikembangkan lebih lanjut melalui pengujian, analisis, serta eksperimen RevCore.
+
 Dokumen ini menjelaskan model decoding sensor Live Data yang dipakai `:core`. Modelnya
 generik; layout yang ditampilkan di sini adalah **contoh sintetis milik repository ini**,
 bukan layout ECU Honda dan bukan hasil transkrip firmware pihak ketiga.
 
 ## 1. Status materi
 
-Repository ini tidak menyertakan layout, offset, skala, atau request frame Live Data Honda.
-Materi tersebut pernah dianalisis, tetapi hak penggunaannya belum diselesaikan, sehingga
-ditarik dari materi publik dan dari katalog bawaan `:core`.
+Tabel, request frame, offset, dan skala hasil rekonstruksi RevCore dipublikasikan di
+[LIVE_DATA_REFERENCE.md](LIVE_DATA_REFERENCE.md) dan `data/live_data/live_tables.json`.
+Seluruh entri berstatus `RECONSTRUCTED` dan belum diverifikasi pada kendaraan. Katalog
+bawaan `:core` tetap kosong: pemanggil mendaftarkan `LiveTableProfile` sendiri agar tidak
+ada frame yang dikirim tanpa persetujuan pemanggil.
 
-Yang tetap tersedia:
+Yang tersedia di `:core`:
 
 - kelas `LiveTableProfile` dan `LiveFieldSpec`,
 - `LiveDataFrameParser` generik,
@@ -18,6 +24,8 @@ Yang tetap tersedia:
 - aturan `0xFF` alternatif,
 - state per parameter dan gating mesin berputar,
 - contoh sintetis `0x7A` beserta unit test.
+
+Contoh `0x7A` di bawah adalah contoh sintetis untuk parser, bukan tangkapan ECU.
 
 ## 2. Model field
 
@@ -133,6 +141,21 @@ Setiap field diperiksa setelah skala dan bias:
 - data lama tidak diperbarui → `STALE`;
 - sensor khusus mesin berputar dan RPM = 0 → `NOT_AVAILABLE_IN_KOEO`;
 - sensor tidak didefinisikan profil → `UNSUPPORTED`.
+
+## 8. Catatan analisis dan batas
+
+- Contoh `0x7A` di atas adalah contoh sintetis. Tabel hasil rekonstruksi RevCore dan
+  status skalanya ada di [LIVE_DATA_REFERENCE.md](LIVE_DATA_REFERENCE.md) dan
+  `data/live_data/live_tables.json`. Implementasi memakai baterai 0,1 V/count dan
+  injektor 1/200 ms/count; contoh sintetis lama memakai skala lain. Perbedaan ini
+  dicatat sebagai `UNVERIFIED`/`DIPERTANYAKAN`, bukan diam-diam diubah.
+- TPS pada throttle tertutup belum dijamin mencapai 0%. Offset/kalibrasi belum tersedia.
+  Status: **bug menunggu perbaikan**.
+- Satu tabel Live Data lain masih berstatus `UNKNOWN`: daftar sensor tersedia, tetapi
+  pemetaan byte belum diketahui. Tabel dan statusnya tetap dipublikasikan; tafsir nilai
+  belum boleh dipakai sebagai kalibrasi.
+- Semua nilai yang belum diuji pada hardware berstatus `UNVERIFIED`. Contoh sintetis
+  tidak membuktikan perilaku ECU.
 
 Field yang gagal **tidak** diubah menjadi nol. Nilai tidak dimasukkan ke `values`, dan UI
 harus membaca `parameterStates`/`stateOf()`.

@@ -1,5 +1,9 @@
 # IDENTIFIKASI ECU
 
+> **STATUS: DALAM TAHAP ANALISIS DAN PENGUJIAN**
+>
+> Tidak seluruh informasi telah dikonfirmasi melalui pengujian hardware. Informasi diperoleh dari beberapa sumber publik dan dikembangkan lebih lanjut melalui pengujian, analisis, serta eksperimen RevCore.
+
 Dokumen ini menjelaskan cara `:core` mengubah respons identifikasi menjadi `EcuIdentity` dan kapan sebuah model boleh diterbitkan. Prinsip utamanya: **identifikasi bukan tebakan**.
 
 ## 1. Dua lapis masalah

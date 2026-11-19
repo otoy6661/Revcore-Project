@@ -87,7 +87,9 @@ supaya kesalahan tabel atau payload cepat terlihat.
 ## Batasan
 
 - Layout dan tabel adalah **sintetis** dari `SampleLiveData.profile`; bukan
-  layout ECU Honda. Tabel Honda asli tidak disertakan di repo.
+  layout ECU Honda. Tabel hasil rekonstruksi RevCore tersedia terpisah di
+  [docs/LIVE_DATA_REFERENCE.md](../../docs/LIVE_DATA_REFERENCE.md) dan `data/live_data/`,
+  tetapi tidak dipakai oleh sampel ini.
 - Request frame (`72 05 71 7A 9E`) tidak dikirim; payload diberikan langsung.
 - Sampel tidak menerapkan `minPayload` untuk membatalkan seluruh frame; hanya
   field yang byte-nya tidak ada yang menjadi `NOT_RESPONDING`.

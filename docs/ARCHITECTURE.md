@@ -197,7 +197,7 @@ Pemetaan konsep ke package:
 
 ## 8. Batas publikasi
 
-Tidak ada dependensi dari `:core` ke package Application Layer atau Security/Integrity. `EcmDatabase` di repository ini membaca aset langsung tanpa trust gate. Aplikasi yang mengintegrasikan pustaka bertanggung jawab menentukan kebijakan integritasnya sendiri.
+Tidak ada dependensi dari `:core` ke package Application Layer atau Security/Integrity. `EcmDatabase` di repository ini membaca aset langsung tanpa pemeriksaan integritas tambahan. Aplikasi yang mengintegrasikan pustaka bertanggung jawab menentukan kebijakan integritasnya sendiri.
 
 Untuk penjelasan pengecualian, lihat [SECURITY_AND_INTEGRITY.md](SECURITY_AND_INTEGRITY.md).
 

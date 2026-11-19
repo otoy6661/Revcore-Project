@@ -1,5 +1,9 @@
 # MESIN KOMUNIKASI
 
+> **STATUS: DALAM TAHAP ANALISIS DAN PENGUJIAN**
+>
+> Tidak seluruh informasi telah dikonfirmasi melalui pengujian hardware. Informasi diperoleh dari beberapa sumber publik dan dikembangkan lebih lanjut melalui pengujian, analisis, serta eksperimen RevCore.
+
 Dokumen ini menjelaskan `KlineWireEngine`, `EcuSessionManager`, dan cara keduanya dipakai `HondaProtocolEngine`. Tujuannya agar developer memahami siapa yang memiliki buffer, timing, dan keputusan valid/tidaknya sebuah respons.
 
 ## 1. Pembagian tanggung jawab

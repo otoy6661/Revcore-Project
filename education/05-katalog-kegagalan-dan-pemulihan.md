@@ -423,7 +423,9 @@ nyata sebelum mengubah default.
 
 **Kondisi.** `HondaLiveDataProfiles` kosong.
 
-**Penyebab.** Konstanta proprietary ditarik karena status hak penggunaan belum jelas.
+**Penyebab.** Profil generik `:core` tidak membawa katalog bawaan. Tabel Live Data hasil
+rekonstruksi RevCore dipublikasikan di `data/live_data/` dan harus dimuat pemanggil
+secara eksplisit; layout dari program lain tidak disertakan.
 
 **Diagnosis.** Periksa `hasLiveDataCatalog` dan state `UNSUPPORTED_PROFILE`.
 

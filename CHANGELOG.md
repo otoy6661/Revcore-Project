@@ -2,6 +2,38 @@
 
 Semua tanggal memakai format `YYYY-MM-DD`. Nomor rilis publikasi ditetapkan `0.3.0` pada Work Order rilis final.
 
+## Belum dirilis — 2026-11-19 (menunggu instruksi eksekusi pemilik)
+
+### Ditambahkan
+
+- `data/vehicle_database/ecm_database.json`: database kendaraan hasil kompilasi RevCore, 489 record, status `terdaftar`; batas RPM dan kompatibilitas remap ditandai belum terverifikasi.
+- `data/vehicle_database/ecm_profiles.json`: 163 profil ECM hasil rekonstruksi, ID publik `ECM-001`–`ECM-163`, tautan ke inventaris MAP, `vehicleTested: false`.
+- `data/map_library/inventory.csv`: inventaris 162 berkas MAP dengan ukuran, SHA-256, identifikasi format, status analisis, dan tautan profil.
+- `data/live_data/live_tables.json`: 7 tabel Live Data, 84 field, skala, bias, offset, dan status validasi.
+- `docs/LIVE_DATA_REFERENCE.md`: rumus, tabel per sensor, contoh decoding sintetis, dan batas tafsir.
+- `docs/TEMUAN_DAN_EKSPERIMEN.md`: temuan protokol, Live Data, DTC, MAP, adapter, dan pelajaran yang tercatat.
+- `docs/KLASIFIKASI_MATERI.md`: pemisahan hasil pengembangan RevCore, referensi eksternal, dan berkas asli pihak lain.
+- README: ringkasan cakupan baru, struktur `data/`, dan tautan dokumentasi terkait.
+
+### Diubah
+
+- Klasifikasi materi pada rilis 0.3.0 yang menempatkan database, profil, MAP, dan tabel Live Data sebagai materi pihak ketiga dikoreksi. Hasil analisis, rekonstruksi, dan implementasi RevCore dipublikasikan; hanya berkas mentah pihak lain, kunci/IV kontainer MAP, dan mekanisme keamanan internal yang tidak disertakan.
+- Banner status pada dokumen protokol, database, dan MAP memakai pernyataan provenance yang disetujui pemilik dan tidak menyebut identitas program sumber.
+- Keputusan pemilik 2026-11-19: verifikasi byte-per-byte menunjukkan 0 dari 162 MAP merupakan hasil karya RevCore (162/162 identik dengan aset pihak lain), sehingga tidak ada biner MAP yang dilampirkan; inventaris dan analisis tetap dipublikasikan. MAP-093 yang belum dikenali tetap dicantumkan.
+- 700 image BIN dan 177 definisi peta eksternal tidak dimasukkan sesuai keputusan pemilik; dokumentasi dan analisis yang memakainya tetap dipublikasikan.
+
+### Tidak disertakan
+
+- Materi komponen keamanan internal beserta mekanismenya.
+- UI/Application Layer.
+- Kunci, IV, dan mekanisme kripto kontainer MAP.
+- Berkas mentah MAP, firmware, dan image BIN yang merupakan salinan aset pihak lain.
+
+### Diverifikasi
+
+- Rincian hasil verifikasi Tahap 3 dicatat di laporan Kodir; belum ada commit, push, ZIP, atau release sebelum instruksi eksekusi pemilik.
+
+
 ## 0.1.0-dev — 2026-11-16
 
 ### Ditambahkan
@@ -23,7 +55,7 @@ Semua tanggal memakai format `YYYY-MM-DD`. Nomor rilis publikasi ditetapkan `0.3
 
 ### Diubah dari source proyek
 
-- `EcmDatabase.kt`: kait Security/Integrity dihapus dari jalur pemuatan aset; pembacaan aset dikembalikan ke jalur biasa. Tiga record fallback kendaraan nyata diganti tiga record sintetis. Perubahan ini dicatat di [audit/SOURCE_MAPPING.md](audit/SOURCE_MAPPING.md).
+- `EcmDatabase.kt`: ketergantungan pada lapisan aplikasi dihapus dari jalur pemuatan aset; pembacaan aset dikembalikan ke jalur biasa. Tiga record fallback kendaraan nyata diganti tiga record sintetis. Perubahan ini dicatat di [audit/SOURCE_MAPPING.md](audit/SOURCE_MAPPING.md).
 - `EcmCatalogAndIdentityTest.kt`: ID record disesuaikan dengan dataset sintetis. Test Live Data (termasuk pemeriksaan AFR `UNSUPPORTED` dan ketiadaan `O2_RAW`) dipakai apa adanya dari proyek.
 
 ### Tidak disertakan
@@ -91,11 +123,15 @@ Semua tanggal memakai format `YYYY-MM-DD`. Nomor rilis publikasi ditetapkan `0.3
 - README, manifest, audit, panduan source, dan panduan pengujian disesuaikan dengan 53 source (9.791 baris), 19 test (2.517 baris, 153 `@Test`), dan 24 dokumen `docs/`.
 - Status rilis ditetapkan `0.3.0`; bahasa "menunggu persetujuan" diganti dengan batas cakupan teknis yang berlaku.
 
-### Tidak disertakan
+### Tidak disertakan (klasifikasi 0.3.0; direvisi 2026-11-19)
 
-- `data/flashpro`: container crypto, profil, matcher, flash engine, remap workflow, dan editor berasal dari referensi pihak ketiga atau jalur flash; tidak dipublikasikan.
-- UI/Application Layer, Security/Integrity, dan komponen khusus Gate 10.
+- Materi referensi eksternal dan materi pihak ketiga yang hak distribusinya belum terbukti: tidak dipublikasikan.
+- UI/Application Layer dan komponen keamanan internal.
 - Database/MAP nyata, firmware, dan katalog Live Data proprietary.
+
+> Revisi 2026-11-19: database kendaraan, profil ECM, inventaris MAP, dan tabel Live Data
+> hasil pengembangan RevCore kini dipublikasikan di `data/`. Berkas mentah pihak lain
+> tetap tidak disertakan.
 
 ### Diverifikasi
 
@@ -104,7 +140,7 @@ Semua tanggal memakai format `YYYY-MM-DD`. Nomor rilis publikasi ditetapkan `0.3
 - `py tools/validate_fixtures.py --verbose` dan `py tools/validate_datasets.py --verbose --demo`: lulus.
 - Tidak ada pengujian ECU fisik.
 
-## Riwayat referensi internal (bukan changelog publikasi)
+## Catatan referensi build
 
 - Build `141126`, `151126`, dan `161126` adalah APK yang dianalisis. Build `161126` menjadi referensi utama perilaku.
-- Perubahan penting pada build terbaru: penanganan AFR di Live Monitor menjadi jujur (`UNSUPPORTED`, tanpa derivasi host), dan penambahan modul storage aplikasi. UI/Application Layer storage tidak termasuk publikasi; utilitas storage tanpa UI disertakan pada 0.3.0.
+- Perubahan perilaku yang relevan: penanganan AFR pada Live Data menjadi `UNSUPPORTED` tanpa derivasi host. Utilitas storage tanpa UI disertakan pada 0.3.0.

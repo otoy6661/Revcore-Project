@@ -1,5 +1,9 @@
 # FRAME PARSER
 
+> **STATUS: DALAM TAHAP ANALISIS DAN PENGUJIAN**
+>
+> Tidak seluruh informasi telah dikonfirmasi melalui pengujian hardware. Informasi diperoleh dari beberapa sumber publik dan dikembangkan lebih lanjut melalui pengujian, analisis, serta eksperimen RevCore.
+
 Dokumen ini menjelaskan bagaimana byte mentah dari USB berubah menjadi `CommandOutcome.Frame`. Fokusnya adalah `KlineWireEngine` karena itulah jalur yang dipakai `HondaProtocolEngine`.
 
 ## 1. Prinsip

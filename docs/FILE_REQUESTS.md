@@ -18,11 +18,12 @@ Repository ini tidak menjanjikan bahwa semua berkas internal dapat diberikan. Ma
 berikut tetap dikecualikan:
 
 - source Application Layer dan Security/Integrity;
-- database ECM lengkap;
-- MAP/profil/firmware pihak ketiga;
-- firmware ECU atau binary ROM;
+- berkas mentah MAP/profil/firmware pihak lain, firmware ECU, atau binary ROM;
 - keystore, private key, token, atau kredensial;
 - catatan analisis internal dan data pribadi.
+
+Database kendaraan, profil ECM, inventaris MAP, dan tabel Live Data hasil pengembangan
+RevCore sudah tersedia di `data/` dan tidak perlu diminta terpisah.
 
 ## 3. Kriteria peninjauan
 

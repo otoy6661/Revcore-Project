@@ -75,7 +75,8 @@ Satu PR untuk satu tujuan. Sertakan:
 - **Lisensi:** asal data dan hak penggunaannya.
 
 PR akan ditolak bila mengarang frame, mengklaim kompatibilitas tanpa bukti, memasukkan
-materi proprietary, melemahkan test, atau menyentuh bagian yang dikecualikan.
+berkas mentah pihak lain atau kredensial, melemahkan test, atau menyentuh bagian yang
+dikecualikan.
 
 ## 4. Menambah sensor atau profil Live Data
 
@@ -91,7 +92,8 @@ materi proprietary, melemahkan test, atau menyentuh bagian yang dikecualikan.
    luar rentang.
 6. **Dokumentasikan batas.** Family, kendaraan, kondisi mesin, dan apa yang belum
    diketahui.
-7. **Jangan memakai konstanta proprietary** yang hak penggunaannya belum jelas.
+7. **Jangan menyalin layout/kode program lain sebagai milik sendiri.** Rekonstruksi dan
+   hasil analisis sendiri boleh dipublikasikan dengan label bukti yang jujur.
 
 Pemanggil dapat menyediakan profil sendiri tanpa mengubah katalog bawaan. Ini cara yang
 paling aman untuk bereksperimen.
@@ -140,8 +142,8 @@ Yang perlu diperhatikan:
    klaim kepemilikan, penjualan ulang komersial tanpa izin, dan distribusi modifikasi
    tanpa izin pemilik. Untuk penggunaan pribadi dan belajar, ikuti ketentuan tersebut;
    untuk distribusi, minta izin pemilik.
-5. **Jangan memakai materi yang tidak disertakan** (UI RevCore, Security/Integrity,
-   katalog proprietary, firmware, MAP nyata).
+5. **Jangan menyertakan materi yang memang dikecualikan** (UI RevCore, Security/Integrity,
+   berkas mentah pihak lain, kredensial).
 6. **Jangan menambahkan operasi tulis** ke ECU tanpa prosedur keselamatan dan izin.
 
 Kemandirian bukan berarti mengklaim karya orang lain. Kemandirian berarti Anda dapat

@@ -25,14 +25,13 @@ File `LICENSE-DEPENDENCIES.md` hanya mencatat lisensi pustaka pihak ketiga yang 
 
 Repository ini sengaja tidak menyertakan:
 
-- database ECM lengkap milik RevCore atau pihak ketiga;
-- profil, MAP, atau firmware pihak ketiga dan materi sejenis;
-- firmware ECU pihak ketiga;
-- source Application Layer dan Security/Integrity;
+- berkas MAP mentah, firmware, bootloader, dan binary ECU yang merupakan salinan aset pihak lain;
+- kunci, IV, dan mekanisme kripto kontainer MAP;
+- source Application Layer dan Security/Integrity, termasuk mekanisme internalnya;
 - keystore, private key, sertifikat signing, token, atau kredensial;
 - data pribadi pengguna atau data kendaraan yang dapat diidentifikasi.
 
-`core/src/main/assets/ecm_database.json` hanya berisi tiga record sintetis untuk demonstrasi. Tidak ada identitas kendaraan nyata, offset ROM, atau batas RPM yang diklaim.
+`core/src/main/assets/ecm_database.json` hanya berisi tiga record sintetis untuk demonstrasi build. Database kendaraan hasil kompilasi RevCore tersedia terpisah di `data/vehicle_database/` dengan status `terdaftar`; tidak ada klaim pengujian atau batas RPM yang sudah terverifikasi.
 
 ## 3. Status bukti
 
@@ -50,7 +49,7 @@ Keberadaan sebuah kelas di APK dan pemetaan R8 membuktikan kelas itu ada pada bu
 
 Honda, PGM-FI, Keihin, Shindengen, Denso, FTDI, CH340, CP210x, Prolific, Android, Gradle, Kotlin, dan nama produk lain adalah merek atau nama dagang pemiliknya masing-masing. Penyebutan nama tersebut bersifat teknis dan tidak menyatakan afiliasi, dukungan, atau lisensi.
 
-Sebagian konstanta hasil analisis pernah dibandingkan dengan referensi pihak ketiga. Konstanta Live Data yang hak penggunaannya belum jelas telah ditarik dari repository ini; katalog bawaan `:core` kosong. Tidak ada kode, firmware, atau data pihak ketiga yang disertakan. Bagian yang masih berasal dari referensi ditandai `RECONSTRUCTED` atau `REFERENCE` dan memerlukan peninjauan pemilik sebelum publikasi.
+Sebagian konstanta hasil analisis pernah dibandingkan dengan referensi pihak ketiga. Yang dipublikasikan adalah hasil analisis, rekonstruksi, dan implementasi RevCore sendiri: database kendaraan, profil ECM, inventaris MAP, tabel Live Data, rumus, dan dokumentasi. Layout tabel dari program lain, berkas mentah pihak lain, dan kunci kontainer tidak disertakan. Bagian yang berasal dari rekonstruksi ditandai `RECONSTRUCTED` atau `REFERENCE` dan tidak diklaim sebagai hasil pengujian kendaraan.
 
 ## 5. Keamanan
 

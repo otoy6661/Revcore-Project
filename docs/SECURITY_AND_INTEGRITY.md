@@ -31,8 +31,8 @@ Informasi berikut adalah batas minimum yang diperlukan untuk memahami modul publ
 - Arah dependensi adalah aplikasi pemanggil → `:core`, bukan sebaliknya.
 - Aplikasi pemanggil bertanggung jawab atas izin USB, lifecycle proses, penyimpanan
   preferensi, dan kebijakan integritasnya sendiri.
-- `:core` tidak melakukan pemeriksaan tanda tangan APK, tidak membaca trust record, dan
-  tidak menangani penanda instalasi.
+- `:core` tidak melakukan pemeriksaan integritas aplikasi dan tidak menangani status
+  instalasi.
 - Tidak ada API publik di `:core` yang ditujukan untuk memverifikasi atau mengubah
   status keamanan aplikasi.
 
@@ -57,12 +57,13 @@ luar repository ini. Catatan tersebut tidak disalin ke staging, tidak disertakan
 ZIP, dan tidak dipublikasikan. Repository hanya memuat kesimpulan batas seperti dokumen
 ini.
 
-## 6. Materi pihak ketiga
+## 6. Materi pihak ketiga dan hasil pengembangan
 
-Firmware, tabel MAP, profil pihak ketiga, database kendaraan lengkap, dan aset lain yang
-hak redistribusinya belum terbukti tidak disertakan. Konstanta Live Data yang hak
-penggunaannya belum jelas telah ditarik dari repository publik dan dari katalog bawaan
-`:core`; hanya parser generik dan contoh sintetis yang tersisa. Lihat
+Berkas MAP mentah, firmware, BIN/ROM, dan kunci/IV kontainer yang merupakan salinan aset
+pihak lain tidak disertakan. Yang disertakan adalah hasil pengembangan RevCore: database
+kendaraan, profil ECM hasil rekonstruksi, inventaris dan analisis MAP, tabel Live Data,
+rumus, dan dokumentasi. Layout tabel dari program lain tidak disertakan. Lihat
+[KLASIFIKASI_MATERI.md](KLASIFIKASI_MATERI.md) dan
 [PUBLICATION_MANIFEST.md](../PUBLICATION_MANIFEST.md) bagian 6.
 
 ## 7. Jika Anda membutuhkan bagian yang dikecualikan

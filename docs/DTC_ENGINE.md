@@ -1,5 +1,9 @@
 # DTC ENGINE
 
+> **STATUS: DALAM TAHAP ANALISIS DAN PENGUJIAN**
+>
+> Tidak seluruh informasi telah dikonfirmasi melalui pengujian hardware. Informasi diperoleh dari beberapa sumber publik dan dikembangkan lebih lanjut melalui pengujian, analisis, serta eksperimen RevCore.
+
 Dokumen ini menjelaskan pembacaan dan penghapusan DTC: query yang dikirim, format payload yang diterima, arti status, dan kapan hasil boleh disebut terverifikasi.
 
 ## 1. Prinsip

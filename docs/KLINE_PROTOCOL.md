@@ -1,5 +1,9 @@
 # PROTOKOL K-LINE
 
+> **STATUS: DALAM TAHAP ANALISIS DAN PENGUJIAN**
+>
+> Tidak seluruh informasi telah dikonfirmasi melalui pengujian hardware. Informasi diperoleh dari beberapa sumber publik dan dikembangkan lebih lanjut melalui pengujian, analisis, serta eksperimen RevCore.
+
 Dokumen ini menjelaskan format frame, header, service, timing, dan katalog request yang dipakai `:core`. Semua contoh adalah frame sintetis atau frame katalog; tidak ada rekaman ECU nyata.
 
 ## 1. Lapisan fisik dan parameter
@@ -77,9 +81,12 @@ Panjang minimum 4 byte. Panjang maksimum yang dijaga codec adalah `0xFE` (254). 
 
 ### 5.2 Live Data
 
-`:core` tidak menyertakan katalog tabel live data bawaan. Tabel Honda yang pernah
-dianalisis tidak disertakan karena hak penggunaannya belum diselesaikan, dan `queryLiveData()`
-mengembalikan `UNSUPPORTED_PROFILE` tanpa mengirim frame.
+`:core` tidak menyertakan katalog tabel Live Data bawaan, sehingga `queryLiveData()`
+mengembalikan `UNSUPPORTED_PROFILE` tanpa mengirim frame. Tabel hasil rekonstruksi RevCore
+dipublikasikan sebagai data di [LIVE_DATA_REFERENCE.md](LIVE_DATA_REFERENCE.md) dan
+`data/live_data/live_tables.json`; pemanggil harus mendaftarkannya sebagai
+`LiveTableProfile`. Seluruh tabel berstatus `RECONSTRUCTED` dan belum diverifikasi pada
+kendaraan.
 
 Bentuk request tabel bersifat generik: `[header][panjang][service 0x71][selector tabel][checksum]`.
 Contoh sintetis yang dipakai fixture repository adalah:
@@ -174,6 +181,6 @@ Respons negatif **bukan** bukti bahwa ECU tidak ada; ia justru bukti ECU menerim
 | Batas panjang 0xFE | `BINARY_EVIDENCE` |
 | Wake 70/130 ms | `RECONSTRUCTED` (host-side) |
 | Katalog identifikasi baseline | `RECONSTRUCTED` |
-| Katalog Live Data bawaan | `UNRESOLVED` (ditarik; hanya parser generik) |
+| Katalog Live Data bawaan `:core` | `KOSONG` (profil disediakan pemanggil; tabel rekonstruksi di `data/live_data/`) |
 | Header 0x7E/0x7C → family | `HYPOTHESIS` |
 | Frame family selain baseline | `UNRESOLVED` |

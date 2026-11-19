@@ -75,7 +75,8 @@ menghasilkan kegagalan, bukan daftar kosong.
 ### 07 — Decoder Live Data
 
 Membaca field big-endian dan menerapkan skala/bias. Input: payload sintetis. Output:
-tabel field, nilai, satuan. Batas: satu tabel sintetis; tidak ada katalog proprietary.
+tabel field, nilai, satuan. Batas: contoh memakai satu tabel sintetis; tabel hasil
+rekonstruksi RevCore ada di `data/live_data/live_tables.json`.
 
 ### 08 — Parser JSON mini
 

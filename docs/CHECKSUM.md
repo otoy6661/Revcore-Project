@@ -1,5 +1,9 @@
 # CHECKSUM
 
+> **STATUS: DALAM TAHAP ANALISIS DAN PENGUJIAN**
+>
+> Tidak seluruh informasi telah dikonfirmasi melalui pengujian hardware. Informasi diperoleh dari beberapa sumber publik dan dikembangkan lebih lanjut melalui pengujian, analisis, serta eksperimen RevCore.
+
 Dokumen ini menjelaskan checksum frame K-Line dan checksum ROM yang tersedia di `HondaChecksum`. Keduanya fungsi berbeda dan tidak boleh dipertukarkan.
 
 ## 1. Checksum frame

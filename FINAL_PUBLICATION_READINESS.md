@@ -3,12 +3,17 @@
 > **Catatan status (2026-11-19).** Repository sudah dipublikasikan sebagai rilis
 > `v0.3.0`. Istilah "staging" dan pernyataan "belum dipublikasikan" di dokumen ini
 > merujuk kondisi saat audit 2026-11-17 dan dipertahankan sebagai catatan sejarah.
+> Work Order revisi final 19 November 2026 memperluas cakupan publikasi: database
+> kendaraan, profil ECM, inventaris MAP, tabel Live Data, rumus, dan temuan
+> eksperimen hasil pengembangan RevCore kini disertakan di `data/` dan `docs/`.
+> Detail mekanisme keamanan internal, alamat biner, dan nama aset internal tidak
+> dipublikasikan. Perubahan dokumen ini belum di-commit sampai disetujui pemilik.
 
 Tanggal audit: 2026-11-17
 Lokasi: `RevCore_Public_Developer_Repository/` (staging)
 Referensi perilaku: `RevCore build 161126.apk`, SHA-256 `b2b6c5bd68cc9c727c2babe0c510b928a6135fa7ef5e9d8847275887c8647432`
 
-Dokumen ini merangkum kesiapan repository untuk rilis `v0.3.0`. Perintah rilis akhir pemilik menggantikan gate persetujuan sebelumnya; dokumen ini mencatat hasil validasi dan batas yang tetap berlaku. Status ZIP, commit, dan unggahan dicatat pada bagian akhir setelah langkah tersebut dijalankan.
+Dokumen ini merangkum kesiapan repository untuk rilis `v0.3.0`. Perintah rilis akhir pemilik menggantikan batas persetujuan sebelumnya; dokumen ini mencatat hasil validasi dan batas yang tetap berlaku. Status ZIP, commit, dan unggahan dicatat pada bagian akhir setelah langkah tersebut dijalankan.
 
 ## 1. Ringkasan repository
 
@@ -16,13 +21,13 @@ Repository developer RevCore untuk Communication Engine, Protocol Engine, dan Di
 
 | Item | Nilai |
 |---|---|
-| Berkas repository (tanpa cache/build) | 125 (termasuk dokumen ini) |
+| Berkas repository (tanpa cache/build) | 125 pada snapshot `v0.3.0`; bertambah dengan 4 dataset dan 4 README di `data/`, serta dokumen inventaris dan referensi baru di `docs/` |
 | Source Kotlin utama | 53 file, 9.791 baris |
 | Test Kotlin | 19 file, 2.517 baris, 153 `@Test` |
-| Dokumen `docs/` | 24 |
+| Dokumen `docs/` | 30 |
 | Dokumen akar | 8 |
 | Dokumen audit | 6 |
-| Contoh dataset | 6 berkas JSON sintetis |
+| Dataset | 6 berkas JSON sintetis di `examples/`; 4 berkas hasil pengembangan di `data/` |
 | Alat validasi | `tools/validate_fixtures.py`, `tools/validate_datasets.py` |
 | Lisensi | Bukan OSI open source; hak pemilik sesuai [NOTICE.md](NOTICE.md) |
 
@@ -48,12 +53,13 @@ Repository developer RevCore untuk Communication Engine, Protocol Engine, dan Di
 ## 3. Modul yang dikecualikan
 
 - Application Layer: UI, navigasi, state layar, lifecycle aplikasi.
-- Security/Integrity: verifikasi APK, signature, hash, trust record, gate startup, fail-closed flow.
-- Database ECM lengkap (748.580 byte di APK), database kendaraan nyata, dan 162 berkas MAP pihak ketiga.
-- Profil pihak ketiga dan manifest profil pihak ketiga (tidak disertakan, termasuk namanya).
-- Firmware, bootloader, binary ECU, dan aset pihak ketiga lain yang hak redistribusinya belum terbukti.
-- Katalog tabel Live Data bawaan.
-- Workflow flash/remap, kripto kontainer MAP, definisi peta proprietary, dan jalur tulis ROM.
+- Security/Integrity: mekanisme internal; tidak dijelaskan di repository publik.
+- Berkas MAP mentah (162 berkas): salinan aset pihak lain, terverifikasi 162/162 byte-identik dan 0 berkas hasil karya RevCore. Tidak disertakan; inventaris, hash, format, dan analisisnya dipublikasikan di `data/map_library/` dan [docs/MAP_INVENTORY.md](docs/MAP_INVENTORY.md).
+- 700 image BIN dan 177 definisi peta eksternal: tidak dimasukkan sesuai keputusan pemilik 2026-11-19. Dokumentasi dan analisis yang memakainya sebagai referensi tetap dipublikasikan.
+- Firmware, bootloader, dan binary ECU pihak lain: tidak disertakan.
+- Kunci dan IV kontainer MAP, serta mekanisme kriptonya.
+- Layout tabel Live Data dari program lain. Tabel hasil rekonstruksi RevCore dipublikasikan di `data/live_data/` dan [docs/LIVE_DATA_REFERENCE.md](docs/LIVE_DATA_REFERENCE.md).
+- Workflow flash/remap dan jalur tulis ROM.
 - Modul tuning, remap, flash, backup, dan UI.
 - Keystore, private key, sertifikat signing, token, dan kredensial.
 - APK/AAB/AAR/JAR/SO/DEX dan output build (AAR hasil build hanya berada di `core/build/` yang di-ignore).
@@ -64,19 +70,22 @@ Repository developer RevCore untuk Communication Engine, Protocol Engine, dan Di
 
 | Aspek | Status |
 |---|---|
-| Aset publik `core/src/main/assets/ecm_database.json` | 3 record sintetis `SAMPLE-ECM-001..003` |
-| Database kendaraan nyata | Tidak disertakan |
+| Aset build `core/src/main/assets/ecm_database.json` | 3 record sintetis `SAMPLE-ECM-001..003` |
+| Database hasil kompilasi RevCore | [data/vehicle_database/ecm_database.json](data/vehicle_database/ecm_database.json), 489 record, status `terdaftar`; batas RPM belum terverifikasi |
+| Profil ECM | [data/vehicle_database/ecm_profiles.json](data/vehicle_database/ecm_profiles.json), 163 profil, `vehicleTested: false` |
 | Skema | [docs/ECM_DATABASE_SCHEMA.md](docs/ECM_DATABASE_SCHEMA.md) |
 | Template | [examples/vehicle_db/vehicle_template.json](examples/vehicle_db/vehicle_template.json), record `SAMPLE-VEHICLE-001` |
 | Validasi | `py tools/validate_datasets.py --verbose`; 4 record ECM valid |
 | Aturan identitas | Exact atau relasi prefix/suffix terbatas; lebih dari satu kandidat = `AMBIGUOUS` |
-| Klaim kompatibilitas | Tidak ada |
+| Klaim kompatibilitas | Tidak ada; selisih status: terdaftar ≠ dianalisis ≠ didukung ≠ teruji |
 
 ### 4.2 MAP
 
 | Aspek | Status |
 |---|---|
-| MAP kendaraan nyata | Tidak disertakan |
+| Berkas MAP mentah | Tidak disertakan; salinan aset pihak lain |
+| Inventaris | [data/map_library/inventory.csv](data/map_library/inventory.csv), 162 baris: ukuran, SHA-256, format, status analisis |
+| Analisis | 159 tautan profil `READY`, 2 kandidat ganda, 1 tidak dikenali; [docs/MAP_INVENTORY.md](docs/MAP_INVENTORY.md) |
 | Contoh publik | [examples/maps/synthetic_map.json](examples/maps/synthetic_map.json), 8×11, `REFERENCE` |
 | Format | [docs/MAP_FORMAT.md](docs/MAP_FORMAT.md) |
 | Validasi | `py tools/validate_datasets.py --verbose --demo`; struktur 8×11 valid, interpolasi 3500 rpm/45% = 1,34 ms |
@@ -84,7 +93,7 @@ Repository developer RevCore untuk Communication Engine, Protocol Engine, dan Di
 
 ### 4.3 Live Data
 
-Katalog bawaan `HondaLiveDataProfiles` kosong. `HondaEcuProfiles.genericBaseline.liveDataTables` kosong dan `hasLiveDataCatalog == false`. Tanpa profil yang disediakan pemanggil, `queryLiveData()` mengembalikan `null`/`UNSUPPORTED_PROFILE` dan tidak mengirim frame. Contoh sintetis `syntheticTable7A` hanya untuk parser dan fixture, bukan tabel ECU Honda.
+Tabel hasil rekonstruksi RevCore (7 tabel, 84 field) dipublikasikan di [data/live_data/live_tables.json](data/live_data/live_tables.json) dan [docs/LIVE_DATA_REFERENCE.md](docs/LIVE_DATA_REFERENCE.md), status layout `RECONSTRUCTED`, respons ECU `OWNER_REPORTED`/`UNVERIFIED`. Di source, `HondaEcuProfiles.genericBaseline.liveDataTables` kosong dan `hasLiveDataCatalog == false`; tanpa profil yang disediakan pemanggil, `queryLiveData()` mengembalikan `null`/`UNSUPPORTED_PROFILE` dan tidak mengirim frame. Contoh sintetis `syntheticTable7A` hanya untuk parser dan fixture. Parameter yang dilaporkan tampil di aplikasi pemilik: RPM, TPS, EOT, Battery Voltage, Ignition Advance, Injector Pulse, Vehicle Speed, O2.
 
 ## 5. Status per protokol
 
@@ -96,7 +105,7 @@ Katalog bawaan `HondaLiveDataProfiles` kosong. `HondaEcuProfiles.genericBaseline
 | Shindengen H99B K-Line | Kosong | `UNRESOLVED` / `HYPOTHESIS` | Tidak ada modul Shindengen khusus; tidak ada frame yang dikarang |
 | Denso H99B K-Line | Kosong | `UNRESOLVED` | Enum family ada; frame belum direkonstruksi |
 | Family tidak diketahui | Routing ke baseline generik | Bukan klaim identitas | Header respons `0x7E`/`0x7C` hanya hipotesis |
-| Live Data | Parser generik saja | `UNRESOLVED` untuk katalog | Katalog proprietary ditarik |
+| Live Data | Tabel rekonstruksi RevCore di `data/live_data/` | `RECONSTRUCTED`; respons ECU `OWNER_REPORTED`/`UNVERIFIED` | Layout tabel program lain tidak disertakan |
 
 Tidak ada klaim bahwa semua protokol atau semua kendaraan didukung.
 
@@ -146,12 +155,13 @@ Pemeriksaan yang dilakukan:
 - Tidak ada APK, AAB, AAR, JAR, SO, DEX, MAP, BIN, HEX, keystore, atau ZIP di luar direktori build yang di-ignore.
 - Tidak ada path pengguna (`C:\Users\...`) di repository.
 - Tidak ada private key, password, token, API key, atau kredensial. Satu-satunya kecocokan pola adalah teks larangan di dokumen audit.
-- Tidak ada package `com.revcore.android.ui` atau `.security`. Utilitas `core.storage` dan `core.tuning` disertakan tanpa UI dan tanpa lapisan Application.
-- `ecm_database.json` hanya berisi record berawalan `SAMPLE-`.
+- Tidak ada source Application Layer atau komponen keamanan internal. Utilitas `core.storage` dan `core.tuning` disertakan tanpa UI.
+- Aset build `ecm_database.json` hanya berisi record berawalan `SAMPLE-`; dataset `data/vehicle_database/` berisi hasil kompilasi tanpa data pribadi dan tanpa klaim pengujian.
 - Tidak ada akses jaringan, telemetri, iklan, atau unggahan data di source runtime. URL hanya muncul di konfigurasi repository build.
-- Tidak ada nama merek/pustaka pihak ketiga yang tidak diperlukan di dokumen publik; provenance tetap dicatat secara faktual.
-- Konstanta dan katalog Live Data yang hak penggunaannya belum jelas telah ditarik dari source, test, fixture, dan dokumentasi.
-- Tidak ada APK, materi analisis, atau firmware yang diunggah ke layanan eksternal. ZIP rilis hanya berisi source, test, contoh sintetis, dan dokumentasi.
+- Dokumen publik tidak menyebut identitas sumber pihak ketiga. Beberapa source masih memuat detail provenance internal dan dicatat sebagai temuan untuk perubahan terpisah dengan persetujuan pemilik.
+- Konstanta katalog Live Data dari program lain tidak disertakan; tabel hasil rekonstruksi RevCore dipublikasikan di `data/live_data/`.
+- Tidak ada berkas MAP mentah, firmware, atau BIN/ROM pihak lain di repository; hanya inventaris, hash, dan analisis.
+- Tidak ada APK, materi analisis internal, atau firmware yang diunggah ke layanan eksternal. ZIP rilis, bila dibuat setelah instruksi pemilik, hanya berisi source, test, contoh sintetis, dataset hasil pengembangan, dan dokumentasi.
 
 Risiko residual:
 
@@ -159,7 +169,7 @@ Risiko residual:
 |---|---|---|
 | Klaim kompatibilitas tanpa hardware | Tinggi | Dokumentasi menyatakan `UNVERIFIED`; tidak ada klaim kompatibilitas |
 | Hak materi rekontruksi baseline | Sedang | Hanya baseline milik proyek; menunggu persetujuan pemilik |
-| Alamat referensi di `Evidence.kt` | Rendah | Alamat file-relative, bukan alamat runtime; perlu keputusan pemilik |
+| Detail provenance biner di source | Sedang | Tidak dipublikasikan di dokumen; source perlu disanitasi terpisah dengan persetujuan pemilik |
 | Dependency pihak ketiga | Rendah | Notice lengkap; AAR memuat MIT/Apache 2.0 |
 
 ## 9. Audit dependency dan lisensi
@@ -183,32 +193,31 @@ Teks MIT, BSD 3-Clause, dan Apache 2.0 ada di [THIRD_PARTY_NOTICES.md](THIRD_PAR
 
 Batas berikut adalah keputusan cakupan yang sudah ditetapkan dan tidak menunggu persetujuan ulang:
 
-1. **Katalog Live Data kosong.** Katalog proprietary tetap ditarik; hanya parser generik dan contoh sintetis 0x7A yang tersedia.
+1. **Tabel Live Data.** Tabel hasil rekonstruksi RevCore dipublikasikan di `data/live_data/`; layout dari program lain tidak disertakan.
 2. **`LegacyHondaProtocolEngine.kt`.** Disertakan sebagai referensi rollback, ditandai `RECONSTRUCTED`; bukan jalur utama.
-3. **Alamat referensi `Evidence.kt`.** Alamat file-relative dipertahankan untuk provenance; bukan alamat runtime.
+3. **Provenance bukti biner.** Ringkasan status bukti dipertahankan; detail alamat dan identitas referensi tidak dipublikasikan. Source yang masih memuat detail tersebut dicatat sebagai temuan dan memerlukan perubahan terpisah dengan persetujuan pemilik.
 4. **`THIRD_PARTY_NOTICES.md`.** Notice dependency langsung dan transitif disertakan; EPL 1.0 hanya untuk JUnit yang tidak didistribusikan.
-5. **Klaim hardware.** Tidak ada uji ECU fisik; repository tidak menyiratkan kompatibilitas kendaraan.
-6. **Database/MAP nyata.** Tidak disertakan; hanya dataset sintetis berawalan `SAMPLE-`.
+5. **Klaim hardware.** Tidak ada uji kendaraan fisik yang didokumentasikan; repository tidak menyiratkan kompatibilitas kendaraan.
+6. **Database dan MAP.** Database kendaraan, profil ECM, inventaris MAP, dan tabel Live Data hasil pengembangan RevCore disertakan di `data/`; berkas mentah pihak lain tidak disertakan.
 7. **Build environment.** Repository tidak membawa Gradle Wrapper; build offline memerlukan Gradle 9.6.0 dan cache AGP yang sesuai.
 8. **Remote GitHub.** Push dan release hanya dapat dilakukan bila remote RevCore tersedia dan kredensial akses diberikan; lihat §12.
 
 ## 11. Rekomendasi GO/NO-GO
 
-**GO untuk rilis `v0.3.0`** sesuai perintah rilis akhir pemilik: isi publik konsisten dengan cakupan yang ditetapkan, build dan test lulus, validator lulus, tidak ada materi terlarang yang terdeteksi, dan provenance tercatat.
-
-Rilis tetap **tidak boleh** mengklaim kompatibilitas hardware atau menyertakan katalog Live Data proprietary. Bila remote GitHub tidak tersedia, ZIP rilis tetap diselesaikan dan hambatannya dilaporkan tanpa mengarang unggahan.
+**GO untuk rilis berikutnya** sesuai Work Order revisi final 19 November 2026: isi publik konsisten dengan cakupan yang ditetapkan, build dan test lulus, validator lulus, tidak ada materi terlarang yang terdeteksi, dan provenance tercatat. Rilis tetap **tidak boleh** mengklaim kompatibilitas hardware atau menyertakan materi komponen keamanan internal. Commit, push, ZIP, dan release menunggu instruksi eksekusi pemilik.
 
 ## 12. Status rilis
 
 | Item | Nilai |
 |---|---|
-| Versi | `v0.3.0` |
-| ZIP | `RevCore_Developer_Repository_v0.3.0.zip` |
-| Isi ZIP | 125 entri berkas; tanpa `.gradle/`, `build/`, `core/build/`, `.kotlin/`, artefak biner, atau kredensial |
-| Build | AAR debug 540.273 byte, SHA-256 `9b5f478b104870ac8c993fe2cc5a8fff308ac44a634552cefd8e4c13349111ee` |
+| Versi terbit | `v0.3.0` (commit `4160763`, tag `v0.3.0`) |
+| Revisi cakupan 2026-11-19 | Belum di-commit; menunggu instruksi eksekusi pemilik |
+| ZIP | Belum dibuat ulang; ZIP `v0.3.0` lama tidak mencerminkan cakupan baru |
+| Isi repository saat ini | Source, test, contoh, `data/` hasil pengembangan, dokumentasi |
+| Build | AAR debug 540.282 byte, SHA-256 `afac4d22ba8d7668ffbd75b62dc58a2b2156c38bcfe45f67e0599d5d1e53fe37` (hasil build 2026-11-19) |
 | Test | 153 lulus, 0 gagal, 0 error, 0 dilewati |
 | Validator | Fixture 14 frame valid; dataset 5 pemeriksaan lulus |
-| Repositori GitHub | Hanya ke remote RevCore bila tersedia; tidak ke repository lain |
+| Repositori GitHub | `otoy6661/Revcore-Project`; push revisi menunggu instruksi pemilik |
 | Pengujian hardware | Tidak dilakukan; tidak ada klaim kompatibilitas |
 
-Hash ZIP dicatat pada laporan rilis di luar arsip agar tidak menjadi referensi diri.
+Hash ZIP dan APK dicatat pada laporan rilis di luar arsip agar tidak menjadi referensi diri.

@@ -40,7 +40,7 @@ Teks notice lengkap ada di [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ## 5. Materi referensi yang tidak disertakan
 
-Analisis menggunakan referensi internal proyek dan pembanding pihak ketiga. **Tidak ada** kode, firmware, database kendaraan, atau MAP pihak ketiga yang disertakan dalam repository ini. Konstanta Live Data yang hak penggunaannya belum jelas telah ditarik; konstanta lain yang masih berasal dari referensi ditandai `RECONSTRUCTED`/`REFERENCE` dan memerlukan peninjauan pemilik sebelum publikasi.
+Analisis menggunakan referensi internal proyek dan pembanding eksternal. **Tidak ada** berkas MAP, firmware, BIN/ROM, atau kunci kontainer pihak ketiga yang disertakan. Yang disertakan adalah hasil pengembangan RevCore: database kendaraan, profil ECM, inventaris dan analisis MAP, tabel Live Data, rumus, dan dokumentasi. Bagian hasil rekonstruksi ditandai `RECONSTRUCTED`/`REFERENCE` dan tidak diklaim sebagai hasil pengujian kendaraan.
 
 ## 6. Kewajiban pengguna
 

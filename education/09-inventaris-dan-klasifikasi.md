@@ -20,6 +20,11 @@ Audit dilakukan pada working tree `main` (rilis v0.3.0) pada 2026-11-19:
 
 Tidak ada ECU fisik yang digunakan.
 
+> **Catatan revisi (19 November 2026).** Bagian ini adalah snapshot sebelum Work Order
+> revisi final membuka publikasi database, profil ECM, inventaris MAP, dan tabel Live
+> Data. Dataset baru ada di `data/`; ringkasan klasifikasi terbaru ada di
+> [docs/KLASIFIKASI_MATERI.md](../docs/KLASIFIKASI_MATERI.md).
+
 ## 2. Dipertahankan
 
 | Materi | Alasan |
@@ -87,13 +92,15 @@ menetapkan rujukan utama dan menandai snapshot, seperti yang dilakukan di sini.
 | Materi | Alasan |
 |---|---|
 | Application Layer (UI, navigasi, lifecycle layar) | Dikecualikan Addendum A/F |
-| Security/Integrity dan Gate 10 | Dikecualikan; mekanisme tidak dijelaskan |
-| Katalog Live Data proprietary | Hak penggunaan belum jelas |
-| Database kendaraan nyata, firmware, MAP nyata | Hak redistribusi belum terbukti |
+| Komponen keamanan internal | Dikecualikan; mekanisme tidak dijelaskan |
+| Layout tabel Live Data dari program lain | Bukan hasil RevCore |
+| Berkas MAP mentah, firmware, BIN/ROM pihak lain | Salinan aset dengan hak belum jelas |
 | Keystore, private key, token, kredensial | Keamanan |
 | Source atau aset pihak ketiga tanpa izin | Hak cipta |
 
-Tidak ada materi di atas yang ditambahkan oleh pekerjaan ini.
+Database kendaraan, profil ECM, inventaris MAP, tabel Live Data, rumus, dan temuan hasil
+pengembangan RevCore **termasuk** yang dipublikasikan; lihat
+[docs/KLASIFIKASI_MATERI.md](../docs/KLASIFIKASI_MATERI.md).
 
 ## 7. Belum dapat diverifikasi
 
@@ -102,7 +109,7 @@ Tidak ada materi di atas yang ditambahkan oleh pekerjaan ini.
 | Komunikasi dengan ECU nyata | Tidak ada perangkat | Hardware unverified |
 | Timing wake 70/130 ms | Rekonstruksi, bukan pengukuran | Reconstructed |
 | Jumlah provenance source | Dokumen saling bertentangan | Temuan terbuka |
-| Klaim gambar AArch64 di `Evidence.kt` | Tidak dapat direproduksi dari repository | UNVERIFIED |
+| Klaim provenance biner di `Evidence.kt` | Tidak dapat direproduksi dari repository | UNVERIFIED |
 | Perilaku parser DTC pada payload ambigu | Perubahan produksi menunggu keputusan pemilik | Investigating/Open |
 | Langkah 14–16 contoh | Memerlukan aplikasi/hardware | Panduan |
 | APK rilis bertanda tangan | Tidak dibuat dalam pekerjaan ini | Belum dieksekusi |
@@ -118,8 +125,8 @@ Tidak ada materi di atas yang ditambahkan oleh pekerjaan ini.
 - `samples/01-hello-android`: APK debug 844.858 byte, SHA-256
   `9c3763af6378a80a030c24f2a282fe9d4116bf9fdb5af6a1c5f3ee7aaf5da01d`.
 - Contoh 02–13: self-test dijalankan dari direktori masing-masing.
-- Tidak ada source produksi, package name, identitas, UI, Gate 10, atau mekanisme
-  keamanan yang diubah.
+- Tidak ada source produksi, package name, identitas, UI, atau mekanisme
+  keamanan internal yang diubah.
 - Tidak ada APK yang diunggah atau didistribusikan.
 
 ## 9. Keputusan yang menunggu pemilik
@@ -129,4 +136,6 @@ Tidak ada materi di atas yang ditambahkan oleh pekerjaan ini.
 2. Apakah temuan provenance akan direkonsiliasi terhadap proyek sumber.
 3. Apakah APK contoh atau APK RevCore akan didistribusikan; keputusan dan detail
    distribusi sepenuhnya milik pemilik.
-4. Apakah katalog Live Data akan dipulihkan setelah status haknya jelas.
+4. Apakah tabel Live Data hasil rekonstruksi akan diaktifkan sebagai katalog bawaan
+   `:core`; saat ini tabel dipublikasikan di `data/live_data/` dan harus didaftarkan
+   oleh pemanggil.

@@ -69,15 +69,15 @@ Tidak disertakan dalam repository dan tidak didistribusikan sebagai bagian pusta
 - `UsbManager`, `UsbDevice`, `UsbDeviceConnection`, `UsbEndpoint`, `UsbInterface`, `AssetManager`, dan `StateFlow` berasal dari platform atau dependensi yang dideklarasikan.
 - Tidak ada API tersembunyi atau refleksi ke internal platform yang dipakai untuk komunikasi.
 
-## 6. Materi pihak ketiga yang tidak disertakan
+## 6. Materi pihak ketiga dan keputusan distribusi
 
 | Materi | Status | Alasan |
 |---|---|---|
 | Library protokol native pihak ketiga | Tidak disertakan | Hanya referensi analisis konstanta |
-| Profil pihak ketiga | Tidak disertakan | Hak redistribusi belum terbukti |
-| Katalog Live Data bawaan | Ditarik | Hak penggunaan belum jelas |
-| 162 file `.map` | Tidak disertakan | Materi pihak ketiga |
-| Firmware ECU | Tidak disertakan | Bukan milik RevCore |
+| Profil ECM hasil rekonstruksi RevCore | Dipublikasikan di `data/vehicle_database/` | Hasil pengembangan, bukan salinan |
+| Tabel Live Data hasil rekonstruksi RevCore | Dipublikasikan di `data/live_data/` | Hasil pengembangan; layout program lain tidak disertakan |
+| Berkas mentah 162 `.map` | Tidak disertakan | Salinan aset pihak lain; inventaris dan analisis dipublikasikan |
+| Firmware ECU, BIN/ROM | Tidak disertakan | Salinan aset pihak lain |
 | `mapping.txt`, `seeds.txt` | Tidak disertakan | Memuat nama internal Application/Security |
 | Teks lisensi pihak ketiga | Tidak disalin | Repository hanya mencatat metadata; teks resmi menyertai artefak masing-masing |
 

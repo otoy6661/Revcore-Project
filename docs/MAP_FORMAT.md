@@ -1,21 +1,15 @@
 # FORMAT MAP GENERIK
 
 Dokumen ini menjelaskan format MAP contoh yang dipakai repository untuk demonstrasi parser
-dan validator. Format ini **bukan** format biner ECU, bukan definisi ROM, dan tidak
-menyertakan peta pihak ketiga.
+dan validator. Format ini **bukan** format biner ECU dan bukan definisi ROM.
 
 ## 1. Ruang lingkup
 
-Repository publik tidak menyertakan:
-
-- berkas `.map` pihak ketiga;
-- manifest profil pihak ketiga;
-- offset peta dari firmware atau database proprietary;
-- editor atau jalur flashing.
-
-Yang disertakan hanya:
+Repository publik menyertakan:
 
 - template JSON sintetis `examples/maps/synthetic_map.json`;
+- inventaris 162 berkas MAP hasil pekerjaan RevCore di `data/map_library/inventory.csv`
+  (ukuran, SHA-256, identifikasi format, status analisis);
 - parser Kotlin `com.revcore.android.data.map.MapDocument`;
 - validator contoh di `tools/validate_datasets.py`;
 - dokumentasi struktur dan aturan validasi.

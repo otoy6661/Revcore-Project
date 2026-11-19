@@ -1,0 +1,3 @@
+# Dataset teks disimpan apa adanya agar SHA-256 yang didokumentasikan stabil.
+data/**/*.json -text
+data/**/*.csv -text

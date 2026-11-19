@@ -75,8 +75,11 @@ Yang tidak ada:
 
 - aplikasi RevCore lengkap dan Application Layer (UI, navigasi, lifecycle);
 - mekanisme Security/Integrity;
-- katalog Live Data proprietary, firmware, MAP nyata, atau database kendaraan nyata;
+- berkas MAP mentah, firmware, BIN/ROM pihak lain, dan kunci kontainer;
 - kredensial, keystore, atau token.
+
+Database kendaraan, profil ECM, inventaris MAP, dan tabel Live Data hasil pengembangan
+RevCore tersedia di `data/` dan dijelaskan di [docs/LIVE_DATA_REFERENCE.md](../docs/LIVE_DATA_REFERENCE.md).
 
 Batas lengkap ada di [docs/SECURITY_AND_INTEGRITY.md](../docs/SECURITY_AND_INTEGRITY.md)
 dan [NOTICE.md](../NOTICE.md).

@@ -14,7 +14,7 @@ kebenaran.
 3. **Jangan percaya klaim tanpa bukti.** Minta file, baris, perintah, dan output. Jalankan
    sendiri test dan build.
 
-AI tidak boleh diminta mengubah Application Layer, Security/Integrity, Gate 10, package
+AI tidak boleh diminta mengubah Application Layer, komponen keamanan internal, package
 name, nama UI, atau kredit pemilik. Materi itu berada di luar cakupan repository.
 
 ## 2. Alur kerja yang aman
@@ -77,7 +77,7 @@ Usulkan patch sekecil mungkin untuk <tujuan>.
 
 Batasan:
 - Jangan mengubah perilaku di luar tujuan.
-- Jangan mengubah identitas, package name, UI, Gate 10, atau Security/Integrity.
+- Jangan mengubah identitas, package name, UI, atau komponen keamanan internal.
 - Jangan melemahkan assertion atau menonaktifkan validasi.
 - Sertakan diff dan alasan setiap baris.
 - Sebutkan test yang harus ditambahkan.
@@ -162,7 +162,7 @@ Sebelum menerima perubahan dari AI:
 
 - [ ] Saya memahami setiap baris yang berubah.
 - [ ] Diff tidak menyentuh file di luar tujuan.
-- [ ] Tidak ada identitas, package name, UI, Gate 10, atau Security/Integrity yang
+- [ ] Tidak ada identitas, package name, UI, atau komponen keamanan internal yang
       berubah.
 - [ ] Tidak ada nilai palsu, fallback diam-diam, atau error yang ditelan.
 - [ ] Test baru menguji jalur gagal, bukan hanya jalur sukses.

@@ -1,5 +1,9 @@
 # DIAGNOSTIC ENGINE
 
+> **STATUS: DALAM TAHAP ANALISIS DAN PENGUJIAN**
+>
+> Tidak seluruh informasi telah dikonfirmasi melalui pengujian hardware. Informasi diperoleh dari beberapa sumber publik dan dikembangkan lebih lanjut melalui pengujian, analisis, serta eksperimen RevCore.
+
 `HondaProtocolEngine` adalah fasad diagnostik. Dokumen ini menjelaskan API, state, threading, dan batas yang dijaga engine.
 
 ## 1. Tanggung jawab

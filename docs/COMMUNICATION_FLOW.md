@@ -1,5 +1,9 @@
 # ALUR KOMUNIKASI
 
+> **STATUS: DALAM TAHAP ANALISIS DAN PENGUJIAN**
+>
+> Tidak seluruh informasi telah dikonfirmasi melalui pengujian hardware. Informasi diperoleh dari beberapa sumber publik dan dikembangkan lebih lanjut melalui pengujian, analisis, serta eksperimen RevCore.
+
 Dokumen ini menggambarkan urutan operasi dari membuka adapter sampai membaca Live Data dan DTC, termasuk jalur gagal. Diagram memakai teks agar mudah ditelusuri bersama log.
 
 ## 1. Connect

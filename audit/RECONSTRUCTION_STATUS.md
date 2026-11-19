@@ -23,22 +23,22 @@ Ketiganya tidak boleh digabung. Source berstatus `ORIGINAL` tidak otomatis berar
 
 ## 2. Matriks bukti elemen komunikasi
 
-Alamat adalah virtual address relatif file di dalam image AArch64 referensi, bukan alamat runtime perangkat.
+Lokasi bukti biner dan identitas referensi tidak dipublikasikan. Tabel ini hanya mencatat status, ringkasan bukti, dan batasnya.
 
-| Elemen | Status bukti | Alamat | Bukti | Batas |
-|---|---|---|---|---|
-| Checksum aditif 8-bit komplemen dua | `BINARY_EVIDENCE` | `0x17a61ec` | Rutin menjumlah byte lalu `neg` 8-bit; finalizer menulis byte terakhir | Tidak membuktikan ECU menerima semua frame |
-| Batas body frame 254 byte (`0xFE`) | `BINARY_EVIDENCE` | `~0x17a620c` | Guard panjang dan string error di sekitar konstanta | Batas implementasi host, bukan batas ECU |
-| Pemilihan header request `0x7D`/`0x7B` | `BINARY_EVIDENCE` | `0x17a5e04` | Helper memilih header dari flag lalu menambahkan `0x01 0x03` | Bukan katalog lengkap semua request |
-| Fallback fast-init ke 10400 bps | `BINARY_EVIDENCE` | `0x17a5a30` | Perbandingan state dan konstanta `0x28A0` sebelum probe ulang | Toleransi timing ECU tidak diukur |
-| Wake pulse LOW 70 ms / HIGH 130 ms | `RECONSTRUCTED` | — | Dipertahankan dari baseline RevCore; timing host-side | Binary tidak memuat pasangan konstanta 70/130 |
-| Probe sesi H99B generik | `XREF_MAPPED` | `0x178d944` | Modul probe sesi KWP bertahap 0..3, reply minimal 4 byte, payload pertama `0x07` | Byte request sesi belum terbukti |
-| Modul Keihin KWP-over-K-Line | `XREF_MAPPED` | `0x178ba68` | Modul terpisah ditemukan | Frame dan key sesi belum direkonstruksi |
-| Implementasi Shindengen | `HYPOTHESIS` | — | Enum family ada; tidak ada modul khusus Shindengen | Profil sengaja kosong |
-| FTDI bulk transfer/claim | `BINARY_EVIDENCE` | `0x17703b8` / `0x17930d8` | Signature JNI `bulkTransfer(UsbEndpoint, byte[], int, int)` dan penemuan endpoint bulk | Tidak membuktikan semua adapter/ chipset |
-| Katalog request PGM-FI baseline (`0x72`) | `RECONSTRUCTED` | — | Berasal dari baseline RevCore, bukan literal di binary referensi | Probe family-neutral, belum diuji ECU |
-| Frame identifikasi/live/DTC Shindengen | `UNRESOLVED` | — | Tidak ada bukti | Tidak ada frame yang dikarang |
-| Frame Keihin spesifik dari binary | `UNRESOLVED` | — | Tidak ditemukan frame Honda literal | Modul ada, byte belum |
+| Elemen | Status bukti | Bukti | Batas |
+|---|---|---|---|
+| Checksum aditif 8-bit komplemen dua | `BINARY_EVIDENCE` | Rutin menjumlah byte lalu `neg` 8-bit; finalizer menulis byte terakhir | Tidak membuktikan ECU menerima semua frame |
+| Batas body frame 254 byte (`0xFE`) | `BINARY_EVIDENCE` | Guard panjang dan string error di sekitar konstanta | Batas implementasi host, bukan batas ECU |
+| Pemilihan header request `0x7D`/`0x7B` | `BINARY_EVIDENCE` | Helper memilih header dari flag lalu menambahkan `0x01 0x03` | Bukan katalog lengkap semua request |
+| Fallback fast-init ke 10400 bps | `BINARY_EVIDENCE` | Perbandingan state dan konstanta `0x28A0` sebelum probe ulang | Toleransi timing ECU tidak diukur |
+| Wake pulse LOW 70 ms / HIGH 130 ms | `RECONSTRUCTED` | Dipertahankan dari baseline RevCore; timing host-side | Referensi tidak memuat pasangan konstanta 70/130 |
+| Probe sesi H99B generik | `XREF_MAPPED` | Modul probe sesi KWP bertahap 0..3, reply minimal 4 byte, payload pertama `0x07` | Byte request sesi belum terbukti |
+| Modul Keihin KWP-over-K-Line | `XREF_MAPPED` | Modul terpisah ditemukan | Frame dan key sesi belum direkonstruksi |
+| Implementasi Shindengen | `HYPOTHESIS` | Enum family ada; tidak ada modul khusus Shindengen | Profil sengaja kosong |
+| FTDI bulk transfer/claim | `BINARY_EVIDENCE` | Signature JNI `bulkTransfer(UsbEndpoint, byte[], int, int)` dan penemuan endpoint bulk | Tidak membuktikan semua adapter/ chipset |
+| Katalog request PGM-FI baseline (`0x72`) | `RECONSTRUCTED` | Berasal dari baseline RevCore, bukan literal di referensi eksternal | Probe family-neutral, belum diuji ECU |
+| Frame identifikasi/live/DTC Shindengen | `UNRESOLVED` | Tidak ada bukti | Tidak ada frame yang dikarang |
+| Frame Keihin spesifik dari referensi | `UNRESOLVED` | Tidak ditemukan frame Honda literal | Modul ada, byte belum |
 
 Sumber registry: `core/src/main/java/com/revcore/android/core/comm/Evidence.kt`. Registry ini ikut dibangun dan dapat dibaca aplikasi.
 
@@ -75,10 +75,10 @@ Sumber registry: `core/src/main/java/com/revcore/android/core/comm/Evidence.kt`.
 | Kompatibilitas dengan ECU fisik | `UNVERIFIED` | Tidak ada hardware dalam pengujian repository |
 | Toleransi timing wake/init pada ECU nyata | `UNVERIFIED` | Hanya simulasi dan referensi host |
 | Byte request untuk Keihin KWP, Shindengen, Denso, Keihin H99B | `UNRESOLVED` | Frame tidak ditemukan/dibuktikan |
-| Katalog Live Data bawaan | `UNRESOLVED` | Ditarik sampai hak penggunaan dan capture perangkat keras selesai |
+| Tabel Live Data hasil rekonstruksi | `RECONSTRUCTED` untuk layout; `OWNER_REPORTED`/`UNVERIFIED` untuk respons ECU | Dipublikasikan di `data/live_data/`; belum ada capture perangkat keras independen |
 | Dukungan semua adapter USB | `UNVERIFIED` | Diuji tanpa perangkat; bergantung library dan chipset |
 | Perilaku pada ignition cycle dan tegangan rendah | `UNVERIFIED` | Tidak diuji di kendaraan |
-| Hak penggunaan katalog Live Data pihak ketiga | Ditahan | Materi ditarik; menunggu keputusan pemilik dan capture perangkat keras |
+| Layout tabel Live Data dari program lain | Ditahan | Bukan hasil RevCore; hanya tabel rekonstruksi sendiri yang dipublikasikan |
 
 ## 6. Batas klaim
 

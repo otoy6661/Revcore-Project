@@ -60,7 +60,7 @@ Header yang dikenal kode: `0x72`, `0x02`, `0x7E`, `0x7C`, `0x7D`, `0x7B`, `0xFE`
 **Batas.** Header yang dikenal bukan berarti semua header berlaku untuk semua family.
 Nilai dan arti header response bergantung pada family ECU.
 
-**Catatan distribusi.** Deskripsi generik; tidak memuat tabel proprietary.
+**Catatan distribusi.** Deskripsi generik; tidak memuat data dari program lain.
 
 ## 2. TX, RX, dan echo
 
@@ -102,7 +102,7 @@ service: daftar DTC, identitas, atau nilai sensor.
 **Batas.** Payload yang checksum-nya valid tetap dapat tidak dapat di-parse. Parser harus
 mengembalikan kegagalan, bukan daftar kosong.
 
-**Catatan distribusi.** Generik; tidak ada katalog proprietary.
+**Catatan distribusi.** Generik; tabel hasil rekonstruksi RevCore dipublikasikan terpisah.
 
 ## 4. Checksum
 
@@ -142,8 +142,10 @@ dapat berasal dari sumber yang salah atau berisi respons negatif.
 
 **Metode.** Analisis source; contoh field memakai tabel sintetis `0x7A`.
 
-**Status validasi.** Synthetic. Offset tabel Live Data proprietary telah ditarik dari
-repository; hanya model dan contoh sintetis yang tersisa.
+**Status validasi.** `RECONSTRUCTED`. Tabel Live Data hasil rekonstruksi RevCore (7 tabel,
+84 field) dipublikasikan di `data/live_data/live_tables.json` dan
+[docs/LIVE_DATA_REFERENCE.md](../docs/LIVE_DATA_REFERENCE.md); respons ECU masih
+`OWNER_REPORTED`/`UNVERIFIED`.
 
 **Contoh pemakaian.** Field didefinisikan relatif terhadap awal payload, bukan awal
 frame. Pada contoh `0x7A`, payload `0B B8 80 40 50 40 00 64 F0 3C 5A C8` didekode
@@ -153,8 +155,8 @@ menjadi antara lain RPM 3000, TPS ADC 128, dan ECT 40 °C (lihat
 **Batas.** Offset tidak boleh ditebak dari urutan tampilan. Offset yang salah dapat
 menghasilkan angka yang terlihat masuk akal tetapi salah.
 
-**Catatan distribusi.** Katalog nyata tidak disertakan karena status hak penggunaan belum
-jelas.
+**Catatan distribusi.** Tabel hasil rekonstruksi RevCore dipublikasikan; layout dari
+program lain tidak disertakan.
 
 ## 6. Panjang field
 
@@ -218,17 +220,18 @@ rentang ditandai tidak valid, bukan ditampilkan sebagai fakta.
 **Batas.** Rumus hanya berlaku untuk profil yang mendefinisikannya. Jangan memakai rumus
 Honda untuk family lain.
 
-**Catatan distribusi.** Generik; konstanta proprietary tidak disertakan.
+**Catatan distribusi.** Generik; konstanta hasil rekonstruksi RevCore ada di
+`docs/LIVE_DATA_REFERENCE.md`.
 
 ## 9. Pemetaan sensor
 
-**Asal.** `LiveSensor` (32 nilai), `HondaLiveDataProfiles` (kosong),
-`docs/SENSOR_DECODING.md`.
+**Asal.** `LiveSensor` (32 nilai), `HondaEcuProfiles` (profil generik tanpa katalog
+bawaan), `data/live_data/live_tables.json`, `docs/SENSOR_DECODING.md`.
 
-**Metode.** Analisis source; katalog ditarik.
+**Metode.** Analisis source dan rekonstruksi tabel; hasilnya dipublikasikan.
 
-**Status validasi.** Reconstructed untuk model generik; katalog nyata `UNVERIFIED` dan
-tidak dipublikasikan.
+**Status validasi.** `RECONSTRUCTED` untuk layout dan skala; respons ECU
+`OWNER_REPORTED`/`UNVERIFIED` sampai ada pengujian perangkat keras independen.
 
 **Contoh pemakaian.** Pemanggil membuat `LiveTableProfile` sendiri: daftar `LiveFieldSpec`
 dengan sensor, offset, panjang, skala, bias, satuan, dan label `REFERENCE` atau
@@ -237,7 +240,7 @@ dengan sensor, offset, panjang, skala, bias, satuan, dan label `REFERENCE` atau
 **Batas.** AFR tidak dihitung dari sensor O2 narrowband. Jika ECU tidak mempublikasikan
 data lebar pita, hasilnya `UNSUPPORTED`, bukan `14.7`.
 
-**Catatan distribusi.** Tidak ada tabel sensor proprietary di repository.
+**Catatan distribusi.** Tabel yang dipublikasikan adalah hasil rekonstruksi RevCore; layout dari program lain tidak disertakan.
 
 ## 10. Contoh respons positif
 
@@ -324,8 +327,8 @@ family lain.
 **Batas.** Header respons berbeda antar family. Menyamakan semua family adalah klaim
 kompatibilitas yang tidak didukung bukti.
 
-**Catatan distribusi.** Nama family disebut untuk kejelasan teknis; tidak ada frame
-proprietary yang disertakan.
+**Catatan distribusi.** Nama family disebut untuk kejelasan teknis; tidak ada frame dari
+program lain yang disertakan.
 
 ## 14. Wake-up dan timing K-Line
 

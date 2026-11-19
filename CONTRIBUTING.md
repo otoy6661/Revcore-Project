@@ -10,7 +10,7 @@ Sebelum mulai, baca [NOTICE.md](NOTICE.md). Kontribusi tidak mengubah kepemilika
 2. **Jangan mengubah perilaku hanya agar test lulus.** Jika test dan implementasi berbeda, tentukan mana yang didukung bukti, dokumentasikan keputusan, lalu perbaiki salah satunya secara eksplisit.
 3. **Pisahkan status bukti.** Gunakan label `ORIGINAL`, `DECOMPILED`, `RECONSTRUCTED`, `REFERENCE`, `UNVERIFIED` pada source, dokumentasi, atau catatan audit.
 4. **Batasi cakupan.** Application Layer dan Security/Integrity bukan target publikasi. Jangan menambahkan source, diagram, atau detail internalnya.
-5. **Jangan memasukkan materi terlarang.** Database ECM lengkap, MAP/profil/firmware pihak ketiga yang haknya tidak jelas, keystore, token, dan data pribadi tidak boleh masuk repository.
+5. **Jangan memasukkan materi terlarang.** Kredensial, materi komponen keamanan internal, dan berkas MAP/firmware/BIN mentah milik pihak lain yang haknya tidak jelas tidak boleh masuk repository. Hasil analisis sendiri boleh masuk dengan label bukti yang jujur.
 
 ## 2. Standar perubahan source
 
@@ -63,9 +63,9 @@ Rincian ada di [docs/TESTING_GUIDE.md](docs/TESTING_GUIDE.md).
   [docs/ECM_DATABASE_SCHEMA.md](docs/ECM_DATABASE_SCHEMA.md). Data publik harus memakai ID
   `SAMPLE-`, offset `"0x0"` bila belum terbukti, dan flag verifikasi `false` bila belum
   diuji pada hardware.
-- **Profil Live Data**: buat `LiveTableProfile` milik Anda dan tandai `verification`
-  sesuai bukti. Jangan menambahkan tabel ke katalog bawaan tanpa persetujuan pemilik dan
-  capture perangkat keras.
+- **Profil Live Data**: tambahkan profil ke dataset `data/live_data/` atau buat
+  `LiveTableProfile` milik Anda; tandai `verification` sesuai bukti. Jangan menambah tabel
+  ke katalog bawaan `:core` tanpa persetujuan pemilik.
 - **MAP**: mulai dari `examples/maps/synthetic_map.json`. Ikuti
   [docs/MAP_FORMAT.md](docs/MAP_FORMAT.md). Jangan mengunggah `.map`, BIN, ROM, atau
   firmware.
@@ -127,7 +127,7 @@ Pisahkan dengan jelas: berhasil, gagal, tidak dapat dijalankan, dan membutuhkan 
 - Frame atau respons yang dikarang.
 - Klaim kompatibilitas atau hasil uji tanpa bukti.
 - Source Application Layer atau Security/Integrity.
-- Dataset kendaraan, MAP, firmware, atau aset pihak ketiga tanpa izin.
+- Berkas MAP, firmware, BIN/ROM, atau aset pihak lain tanpa izin.
 - Kredensial dalam bentuk apa pun.
 - Perubahan yang mematikan validasi keamanan atau menyembunyikan kegagalan.
 - Perubahan yang membuat test lulus dengan melemahkan assertion.

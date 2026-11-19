@@ -5,7 +5,7 @@ Dokumen ini mencatat asal setiap berkas source di repository terhadap proyek pem
 ## 1. Metode
 
 1. APK `RevCore build 161126.apk` dibaca sebagai referensi perilaku; APK tidak diubah dan tidak di-repack.
-2. Source proyek pemilik di `work/revcore` (modul `app`) dipakai sebagai pembanding. Proyek asli tidak diubah, tidak dihapus, dan tidak ditimpa.
+2. Source proyek pemilik lokal (modul `app`) dipakai sebagai pembanding. Proyek asli tidak diubah, tidak dihapus, dan tidak ditimpa.
 3. Berkas staging dibandingkan byte-per-byte dengan berkas proyek menggunakan `cmp`.
 4. Nama class dikorelasikan dengan `mapping.txt` dari output build lokal. `mapping.txt` tidak disalin ke repository.
 5. Berkas yang berbeda dari proyek diberi status `RECONSTRUCTED` dan alasan perubahan dicatat.
@@ -62,7 +62,7 @@ Semua berkas di bawah berada di `core/src/main/java/com/revcore/android/`.
 | `core/comm/HondaFrameCodec.kt` | 92 | `RECONSTRUCTED` | Komentar sumber dianonimkan; perilaku checksum tidak berubah |
 | `core/comm/KlineWireEngine.kt` | 453 | `ORIGINAL` | Identik |
 | `core/comm/LiveDataProfile.kt` | 282 | `RECONSTRUCTED` | Katalog bawaan dikosongkan; parser generik dipertahankan |
-| `core/comm/LivePollPolicy.kt` | 26 | `ORIGINAL` | Identik |
+| `core/comm/LivePollPolicy.kt` | 26 | `RECONSTRUCTED` | Komentar provenance digeneralisasi menjadi "public reference implementation"; perilaku tidak berubah |
 | `core/ftdi/FtdiConstants.kt` | 46 | `ORIGINAL` | Identik |
 | `core/ftdi/FtdiSerialDriver.kt` | 411 | `ORIGINAL` | Identik |
 | `core/protocol/ClearDtcResult.kt` | 17 | `ORIGINAL` | Identik |
@@ -111,11 +111,16 @@ Semua berkas di bawah berada di `core/src/main/java/com/revcore/android/`.
 
 ## 4. Perubahan source utama
 
+> Catatan revisi 2026-11-19: alasan "hak belum jelas" pada baris di bawah adalah catatan
+> keputusan saat penyusunan v0.3.0. Revisi publikasi 2026-11-19 mempublikasikan hasil
+> rekonstruksi RevCore di `data/live_data/` dan `data/vehicle_database/`; katalog bawaan
+> `:core` tetap kosong dan aset bawaan `:core` tetap sintetis.
+
 Sembilan file source utama berbeda dari proyek. Tujuh perubahan pertama bersifat pengurangan atau pengaburan materi yang tidak boleh dipublikasikan; dua perubahan terakhir adalah adaptasi agar modul baru tidak bergantung pada `androidx.core` dan tidak memuat jalur tulis ECU.
 
 | Berkas | Perubahan | Alasan |
 |---|---|---|
-| `Evidence.kt` | Nama pustaka pihak ketiga digeneralisasi menjadi "reference analysis image"; alamat, status, dan catatan bukti dipertahankan | Menghapus ketergantungan identitas pihak ketiga tanpa menyamarkan provenance |
+| `Evidence.kt` | Nama pustaka pihak ketiga digeneralisasi; alamat dan detail referensi tidak lagi dipublikasikan | Menghapus identitas pihak ketiga tanpa menyamarkan provenance |
 | `HondaEcuProfiles.kt` | Probe Live Data, tabel primer, dan tabel ekstensi ditarik; katalog identifikasi dan DTC dipertahankan | Hak penggunaan frame/konstanta Live Data belum jelas |
 | `HondaFrameCodec.kt` | Komentar yang menyebut nama pustaka dianonimkan | Perilaku framing/checksum tidak berubah |
 | `LiveDataProfile.kt` | `HondaLiveDataProfiles` dikosongkan; parser generik, `LiveFieldSpec`, dan state dipertahankan | Katalog bawaan ditarik sampai hak dan validasi jelas |
@@ -131,9 +136,9 @@ Perubahan pada file ini bersifat pengurangan, bukan penambahan perilaku protokol
 
 | Perubahan | Alasan | Dampak |
 |---|---|---|
-| Import dan pemanggilan `IntegrityTrust` / `RevCoreIntegrity` dihapus dari jalur pemuatan aset | Security/Integrity bukan target publikasi (Addendum A) | Pemuatan aset kembali ke jalur biasa; pustaka `:core` tidak bergantung pada package security |
-| Tiga record fallback kendaraan nyata diganti `SAMPLE-ECM-001`, `SAMPLE-ECM-002`, `SAMPLE-ECM-003` | Database kendaraan tidak boleh dipublikasikan tanpa hak yang terbukti | Katalog publik hanya berisi data sintetis |
-| Asset `ecm_database.json` dibaca melalui `AssetManager` tanpa gerbang integritas | Menjaga `:core` mandiri | Aplikasi pemanggil bertanggung jawab atas kebijakan integritasnya |
+| Import dan pemanggilan komponen integritas internal dihapus dari jalur pemuatan aset | Security/Integrity bukan target publikasi (Addendum A) | Pemuatan aset kembali ke jalur biasa; pustaka `:core` tidak bergantung pada package security |
+| Tiga record fallback kendaraan nyata diganti `SAMPLE-ECM-001`, `SAMPLE-ECM-002`, `SAMPLE-ECM-003` | Aset bawaan `:core` tetap sintetis agar tidak ada data kendaraan yang ikut terpaket tanpa ditinjau | Database hasil kompilasi RevCore dipublikasikan terpisah di `data/vehicle_database/` dengan status `terdaftar` |
+| Asset `ecm_database.json` dibaca melalui `AssetManager` tanpa pemeriksaan integritas tambahan | Menjaga `:core` mandiri | Aplikasi pemanggil bertanggung jawab atas kebijakan integritasnya |
 
 Tidak ada perubahan pada struktur `EcmModel`, algoritma pencocokan identitas, atau API publik `resolveIdentity`.
 

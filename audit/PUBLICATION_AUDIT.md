@@ -1,6 +1,6 @@
 # AUDIT PUBLIKASI
 
-Dokumen ini adalah pemeriksaan akhir repository untuk rilis `v0.3.0`. Isinya mencatat apa yang ada, apa yang diuji, apa yang dikecualikan, dan apa yang masih terbuka. Perintah rilis akhir pemilik menggantikan gate persetujuan sebelumnya; batas cakupan teknis tetap berlaku.
+Dokumen ini adalah pemeriksaan akhir repository untuk rilis `v0.3.0`. Isinya mencatat apa yang ada, apa yang diuji, apa yang dikecualikan, dan apa yang masih terbuka. Perintah rilis akhir pemilik menggantikan batas persetujuan sebelumnya; batas cakupan teknis tetap berlaku.
 
 ## 1. Status saat ini
 
@@ -63,9 +63,9 @@ Lingkungan verifikasi: Windows, JDK 25 runtime dengan target Java 21, Gradle 9.6
 
 Test dilakukan terhadap fixture sintetis. Hasil ini tidak membuktikan kompatibilitas ECU.
 
-## 5. Gerbang publikasi
+## 5. Batas publikasi
 
-| Gate | Status | Dasar |
+| Batas | Status | Dasar |
 |---|---|---|
 | 1 — APK Inventory | LULUS | 253 entry, 1 DEX, 3.006 class, 169 aset, 4 native lib; lihat [APK_COMPONENT_INVENTORY.md](APK_COMPONENT_INVENTORY.md) |
 | 2 — Feature Mapping | LULUS | Modul publik dipetakan; Application/Security dikecualikan sesuai addendum |
@@ -81,7 +81,7 @@ Test dilakukan terhadap fixture sintetis. Hasil ini tidak membuktikan kompatibil
 | Butir | Kewajiban | Bukti |
 |---|---|---|
 | A — Cakupan publikasi | Application Layer dan Security/Integrity tidak dipublikasikan | Tidak ada source/diagram/detail; hanya batas integrasi di [SECURITY_AND_INTEGRITY.md](../docs/SECURITY_AND_INTEGRITY.md) dan [SECURITY_AUDIT.md](SECURITY_AUDIT.md) |
-| A — Catatan internal | Disimpan di direktori privat terpisah | `work/revcore_private_notes/` di luar staging |
+| A — Catatan internal | Disimpan di direktori privat terpisah | Di luar repository publik |
 | B — Kunci | Minta owner melalui input lokal aman jika diperlukan; jangan cetak/simpan/kirim | Tidak ada key yang diperlukan atau digunakan; prosedur dicatat di [SECURITY_AUDIT.md](SECURITY_AUDIT.md) |
 | C — Prioritas publik | Communication, USB, K-Line, Protocol, parser/checksum, identifikasi, diagnostik, DTC, Live Data, model, test/dokumentasi | Semua ada di `core/src/main` dan `docs/` |
 | D — Kedalaman analisis | Tidak dikurangi karena publikasi selektif | Analisis APK, R8, dan referensi dilakukan; publikasi dibatasi pada 11 kategori |
@@ -92,10 +92,10 @@ Test dilakukan terhadap fixture sintetis. Hasil ini tidak membuktikan kompatibil
 |---|---|---|
 | Application Layer | Di luar target publikasi | Tidak disalin |
 | Security/Integrity | Di luar target publikasi | Tidak disalin; hanya batas integrasi |
-| Database ECM lengkap 748.580 byte | Hak redistribusi belum terbukti | Diganti 3 record sintetis |
-| 162 file `.map` dan profil pihak ketiga | Materi pihak ketiga | Tidak disertakan |
-| Katalog Live Data bawaan | Hak penggunaan belum jelas | Ditarik; hanya parser generik dan contoh sintetis |
-| `integrity_policy.json`, `ui_integrity_manifest.json` | Internal security | Tidak disertakan |
+| Database ECM bawaan APK 748.580 byte | Aset build internal | Build publik memakai 3 record sintetis; database hasil kompilasi RevCore dipublikasikan di `data/vehicle_database/` |
+| Berkas mentah 162 `.map` dan profil APK | Salinan aset pihak lain | Berkas tidak disertakan; inventaris, hash, format, analisis, dan profil rekonstruksi dipublikasikan |
+| Layout tabel Live Data dari program lain | Bukan hasil RevCore | Tidak disertakan; tabel hasil rekonstruksi RevCore dipublikasikan di `data/live_data/` |
+| Aset keamanan internal (2 berkas) | Internal security | Tidak disertakan; nama dan ukuran tidak dipublikasikan |
 | `mapping.txt`, `seeds.txt` | Nama internal Application/Security | Tidak disertakan |
 | Firmware, bootloader, binary ECU | Bukan milik RevCore / tidak jelas | Tidak disertakan |
 | Keystore, private key, sertifikat signing | Rahasia | Tidak disertakan |
@@ -111,12 +111,12 @@ Test dilakukan terhadap fixture sintetis. Hasil ini tidak membuktikan kompatibil
 
 ## 9. Keputusan cakupan yang berlaku
 
-1. Publikasi source `:core` dan dokumentasi mengikuti perintah rilis akhir pemilik.
-2. Katalog Live Data bawaan tetap kosong sampai hak dan capture perangkat keras selesai.
+1. Publikasi source `:core` dan dokumentasi mengikuti Work Order revisi final 19 November 2026.
+2. Tabel Live Data hasil rekonstruksi RevCore dipublikasikan di `data/live_data/`; layout dari program lain tidak disertakan.
 3. `LegacyHondaProtocolEngine.kt` disertakan sebagai referensi rollback dan ditandai `RECONSTRUCTED`.
 4. Alamat file-relative di `Evidence.kt` dipertahankan sebagai provenance.
 5. `THIRD_PARTY_NOTICES.md` mencakup dependency langsung dan transitif.
-6. ZIP rilis dibuat; unggahan GitHub bergantung pada remote dan akses yang tersedia.
+6. Commit, ZIP, push, dan release menunggu instruksi eksekusi pemilik.
 
 ## 10. Checklist rilis
 

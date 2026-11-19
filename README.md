@@ -2,7 +2,7 @@
 
 Repository developer untuk mempelajari dan mengembangkan **Communication Engine**, **Protocol Engine**, dan **Diagnostic Engine** RevCore di atas K-Line Honda PGM-FI. Isi repository disusun dari APK RevCore terbaru sebagai referensi perilaku, dicocokkan dengan source proyek RevCore, lalu dibatasi pada modul yang boleh dipublikasikan.
 
-Repository ini ditujukan untuk kontributor, pelajar protokol diagnostik, dan pengembang aplikasi diagnostik mandiri yang ingin memakai atau memperluas lapisan komunikasi RevCore. Repository ini **bukan** source lengkap aplikasi RevCore dan **bukan** jaminan kompatibilitas kendaraan. Semua contoh data bersifat sintetis.
+Repository ini ditujukan untuk kontributor, pelajar protokol diagnostik, dan pengembang aplikasi diagnostik mandiri yang ingin memakai atau memperluas lapisan komunikasi RevCore. Repository ini **bukan** source lengkap aplikasi RevCore dan **bukan** jaminan kompatibilitas kendaraan. Contoh data sintetis tetap tersedia di `examples/`; di samping itu, direktori `data/` memuat hasil pengembangan RevCore sendiri — database kendaraan, profil ECM, inventaris MAP, dan tabel Live Data — dengan status bukti yang dicantumkan apa adanya.
 
 ## Mulai belajar
 
@@ -17,7 +17,8 @@ APK debug yang sudah diverifikasi.
 > - Ini adalah repository rilis **v0.3.0**. Status paket dan unggahan dicatat di [FINAL_PUBLICATION_READINESS.md](FINAL_PUBLICATION_READINESS.md) §12.
 > - Ini **bukan** proyek Open Source berlisensi OSI. Hak penggunaan mengikuti [NOTICE.md](NOTICE.md).
 > - Application Layer dan Security/Integrity **tidak** menjadi target publikasi. Lihat [docs/SECURITY_AND_INTEGRITY.md](docs/SECURITY_AND_INTEGRITY.md).
-> - ZIP rilis dibuat dari isi repository tanpa cache/build. Isi ZIP diperiksa terhadap daftar materi terlarang sebelum diserahkan.
+> - Status fungsi berdasarkan laporan pemilik dicatat di [docs/STATUS_PENGUJIAN.md](docs/STATUS_PENGUJIAN.md). Status itu bukan `VERIFIED` dan bukan klaim kompatibilitas kendaraan.
+> - ZIP rilis, bila dibuat setelah instruksi pemilik, disusun dari isi repository tanpa cache/build dan diperiksa terhadap daftar materi terlarang.
 
 ## 1. Referensi APK
 
@@ -54,14 +55,18 @@ Yang dipublikasikan:
 13. Session log dan utilitas penyimpanan.
 14. Model data internal yang diperlukan modul di atas.
 15. Unit test, fixture sintetis, contoh, dan dokumentasi developer.
+16. Database kendaraan hasil kompilasi RevCore (489 record, status `terdaftar`) di [data/vehicle_database/ecm_database.json](data/vehicle_database/ecm_database.json).
+17. Profil ECM hasil rekonstruksi (163 profil) di [data/vehicle_database/ecm_profiles.json](data/vehicle_database/ecm_profiles.json), termasuk tautan profil ke inventaris MAP.
+18. Inventaris MAP lengkap: 162 berkas, ukuran, SHA-256, identifikasi format kontainer, dan status analisis di [data/map_library/inventory.csv](data/map_library/inventory.csv).
+19. Tabel Live Data hasil pengembangan (7 tabel, 84 field), rumus, skala, bias, dan contoh decoding di [data/live_data/live_tables.json](data/live_data/live_tables.json) dan [docs/LIVE_DATA_REFERENCE.md](docs/LIVE_DATA_REFERENCE.md).
+20. Dokumentasi protokol, temuan, eksperimen, kasus gagal, bug yang tercatat, simulasi ECU, dan panduan pengembangan di [docs/TEMUAN_DAN_EKSPERIMEN.md](docs/TEMUAN_DAN_EKSPERIMEN.md).
 
 Yang **tidak** dipublikasikan:
 
 - Source dan detail implementasi Application Layer (UI, navigasi, state layar, lifecycle aplikasi).
-- Source dan detail implementasi Security/Integrity dan Gate 10 (verifikasi APK, signature, hash, trust record, fail-closed startup).
-- Workflow flash/remap, kripto kontainer MAP, definisi peta proprietary, dan aset MAP pihak ketiga.
-- Database ECM lengkap, profil/MAP pihak ketiga, firmware, dan aset lain yang hak redistribusinya belum terbukti.
-- Katalog tabel Live Data bawaan; hanya parser generik dan contoh sintetis yang disertakan.
+- Source dan detail implementasi komponen keamanan internal.
+- Kunci, IV, dan mekanisme kripto kontainer MAP.
+- Berkas MAP mentah, firmware, dan image BIN/definisi peta eksternal. Verifikasi 2026-11-19: 0 dari 162 MAP merupakan hasil karya RevCore (162/162 byte-identik dengan aset pihak lain), dan 700 image BIN + 177 definisi eksternal tidak dimasukkan. Analisis, inventaris, hash, dan struktur tetap dipublikasikan di `data/` — lihat [docs/KLASIFIKASI_MATERI.md](docs/KLASIFIKASI_MATERI.md).
 - Keystore, private key, token, atau kredensial apa pun.
 
 Modul publik tetap memuat **integration boundary** minimal: pustaka `:core` tidak memiliki kode security, dan aplikasi pemanggil bertanggung jawab atas izin USB, lifecycle, serta kebijakan integritasnya sendiri.
@@ -90,7 +95,7 @@ RevCore_Public_Developer_Repository/
 │       │   ├── data/ecu/         # model ECM, katalog, identitas ECU
 │       │   ├── data/map/         # parser, validasi, interpolasi MAP generik
 │       │   └── data/rom/         # ROM read-only: word, checksum, diff blok
-│       ├── main/assets/          # ecm_database.json (3 record sintetis)
+│       ├── main/assets/          # ecm_database.json (3 record sintetis untuk build)
 │       └── test/java/            # 153 unit test
 ├── examples/
 │   ├── protocol_frames/          # frame request sintetis
@@ -99,7 +104,11 @@ RevCore_Public_Developer_Repository/
 │   ├── sensor_data/              # payload Live Data sintetis 0x7A
 │   ├── vehicle_db/               # template database kendaraan sintetis
 │   └── maps/                     # MAP sintetis 8x11
-├── docs/                         # 24 dokumen developer (Bahasa Indonesia)
+├── data/                         # hasil pengembangan: database, profil ECM, inventaris MAP, Live Data
+│   ├── vehicle_database/         # ecm_database.json (489 record), ecm_profiles.json (163 profil)
+│   ├── map_library/              # inventory.csv (162 berkas MAP: hash, format, status)
+│   └── live_data/                # live_tables.json (7 tabel, 84 field)
+├── docs/                         # dokumen developer (Bahasa Indonesia)
 ├── education/                    # pusat pembelajaran: jalur, referensi, katalog kegagalan
 ├── samples/                      # 16 contoh progresif; contoh 01 menghasilkan APK
 ├── tools/                        # validator fixture dan dataset
@@ -214,7 +223,7 @@ Jangan menambahkan operasi tulis ke ECU (flash, remap, security access). Reposit
 
 ## 8. Menambahkan database kendaraan sendiri
 
-Database contoh di `core/src/main/assets/ecm_database.json` hanya berisi tiga record `SAMPLE-`. Aplikasi dapat memakai database sendiri selama hak datanya jelas.
+Database contoh di `core/src/main/assets/ecm_database.json` hanya berisi tiga record `SAMPLE-`. Database kendaraan hasil kompilasi RevCore (489 record) tersedia terpisah di [data/vehicle_database/ecm_database.json](data/vehicle_database/ecm_database.json) dan **tidak** dimuat otomatis oleh build. Aplikasi dapat memakai database sendiri selama hak datanya jelas.
 
 1. Baca skema lengkap di [docs/ECM_DATABASE_SCHEMA.md](docs/ECM_DATABASE_SCHEMA.md).
 2. Mulai dari [examples/vehicle_db/vehicle_template.json](examples/vehicle_db/vehicle_template.json).
@@ -223,13 +232,13 @@ Database contoh di `core/src/main/assets/ecm_database.json` hanya berisi tiga re
 5. Validasi dengan `py tools/validate_datasets.py --verbose`.
 6. Ingat aturan identitas: pencocokan hanya exact atau relasi prefix/suffix terbatas; lebih dari satu kandidat berarti `AMBIGUOUS`, bukan pilihan acak.
 
-`EcmDatabase.init(context)` memuat aset bernama `ecm_database.json`. Bila aplikasi menyediakan aset dengan nama sama, pastikan penggabungan/penimpaan sesuai kebijakan aplikasi dan tetap lolos validator. Jangan mengunggah database kendaraan nyata, hasil rekaman ECU, atau materi pihak ketiga tanpa izin.
+`EcmDatabase.init(context)` memuat aset bernama `ecm_database.json`. Bila aplikasi menyediakan aset dengan nama sama, pastikan penggabungan/penimpaan sesuai kebijakan aplikasi dan tetap lolos validator. Untuk materi pihak lain, unggah hanya bila hak distribusinya jelas.
 
-Panduan kontribusi dataset ada di [docs/DATASET_CONTRIBUTION.md](docs/DATASET_CONTRIBUTION.md).
+Panduan kontribusi dataset ada di [docs/DATASET_CONTRIBUTION.md](docs/DATASET_CONTRIBUTION.md). Cakupan database hasil kompilasi RevCore, status buktinya, dan batas klaim dicatat di [docs/VEHICLE_DATABASE_INVENTORY.md](docs/VEHICLE_DATABASE_INVENTORY.md); tidak ada kendaraan yang dinyatakan didukung atau teruji tanpa bukti pengujian fisik.
 
 ## 9. Membuat dan memvalidasi file MAP
 
-Repository tidak menyertakan MAP kendaraan nyata. Format MAP generik dijelaskan di [docs/MAP_FORMAT.md](docs/MAP_FORMAT.md), dengan contoh [examples/maps/synthetic_map.json](examples/maps/synthetic_map.json).
+Format MAP generik dijelaskan di [docs/MAP_FORMAT.md](docs/MAP_FORMAT.md), dengan contoh [examples/maps/synthetic_map.json](examples/maps/synthetic_map.json). Inventaris 162 berkas MAP hasil pekerjaan RevCore — ukuran, SHA-256, identifikasi format, dan status analisis — ada di [docs/MAP_INVENTORY.md](docs/MAP_INVENTORY.md) dan [data/map_library/inventory.csv](data/map_library/inventory.csv). Berkas MAP mentah yang merupakan salinan aset pihak lain tidak didistribusikan; alasan dan ruang lingkupnya dijelaskan di [docs/KLASIFIKASI_MATERI.md](docs/KLASIFIKASI_MATERI.md).
 
 Contoh ringkas (template lengkap berukuran 8×11):
 
@@ -312,14 +321,14 @@ Developer boleh mengajukan permintaan berkas atau mengusulkan isi repository yan
 
 - Repository ini **bukan source lengkap aplikasi RevCore**. UI, navigasi, tuning, storage, dan security tidak disertakan.
 - Tidak semua profil ECU tersedia. Profil Keihin KWP, Shindengen, Denso, dan Keihin H99B kosong dan berstatus `UNVERIFIED`.
-- Komunikasi hanya divalidasi dengan unit test dan fixture sintetis. **Belum ada uji hardware ECU** di repository ini, dan tidak ada klaim kompatibilitas kendaraan.
+- Komunikasi hanya divalidasi dengan unit test, fixture sintetis, dan pengamatan komunikasi. **Belum ada uji kendaraan fisik** yang didokumentasikan untuk modul publik, dan tidak ada klaim kompatibilitas kendaraan.
 - AFR tidak dihitung di host. ECU hanya mempublikasikan tegangan O2 narrowband dan STF; tanpa data lebar pita yang valid, AFR harus dilaporkan `UNSUPPORTED`, bukan dihitung dari O2 narrowband.
 - Pembacaan DTC yang gagal tidak boleh ditampilkan sebagai daftar kosong. Clear DTC baru dianggap berhasil jika pembacaan ulang benar-benar kosong.
-- Dataset `ecm_database.json` di repository hanya berisi tiga record sintetis. Database kendaraan sebenarnya tidak dipublikasikan.
-- Katalog Live Data bawaan kosong. Tanpa profil yang disediakan pemanggil, `queryLiveData()` tidak mengirim frame dan mengembalikan `null`.
+- `core/src/main/assets/ecm_database.json` hanya berisi tiga record sintetis. Database kendaraan hasil kompilasi RevCore ada terpisah di `data/vehicle_database/` dengan status `terdaftar`; tidak ada yang diklaim teruji.
+- Tabel Live Data hasil pengembangan ada di `data/live_data/live_tables.json`. Layout dan skala berstatus `RECONSTRUCTED`; respons ECU masih `OWNER_REPORTED`/`UNVERIFIED`. Tanpa profil yang disediakan pemanggil, `queryLiveData()` tidak mengirim frame dan mengembalikan `null`.
 - Analisis ROM bersifat read-only. Repository tidak menyertakan jalur tulis, flashing, checksum repair, atau workflow remap.
 - Modul tuning, remap, flash, backup, dan UI tidak termasuk cakupan publikasi.
-- Jangan mengunggah materi proprietary, firmware, MAP/database kendaraan nyata, atau kredensial dalam bentuk apa pun.
+- Jangan mengunggah kredensial dalam bentuk apa pun, materi komponen keamanan internal, atau berkas mentah pihak lain yang hak publikasinya belum jelas.
 
 ## 14. Dokumentasi
 
@@ -336,7 +345,13 @@ Developer boleh mengajukan permintaan berkas atau mengusulkan isi repository yan
 | [docs/CHECKSUM.md](docs/CHECKSUM.md) | Algoritma checksum dan contoh |
 | [docs/ECU_IDENTIFICATION.md](docs/ECU_IDENTIFICATION.md) | Identitas, kanonikalisasi, pencocokan |
 | [docs/ECM_DATABASE_SCHEMA.md](docs/ECM_DATABASE_SCHEMA.md) | Skema database kendaraan/ECU |
+| [docs/VEHICLE_DATABASE_INVENTORY.md](docs/VEHICLE_DATABASE_INVENTORY.md) | Cakupan database hasil kompilasi dan status bukti |
 | [docs/MAP_FORMAT.md](docs/MAP_FORMAT.md) | Format MAP generik dan interpolasi |
+| [docs/MAP_INVENTORY.md](docs/MAP_INVENTORY.md) | Inventaris MAP, ukuran, SHA-256, dan status analisis |
+| [docs/LIVE_DATA_REFERENCE.md](docs/LIVE_DATA_REFERENCE.md) | Tabel Live Data, rumus, skala, dan contoh decoding |
+| [docs/TEMUAN_DAN_EKSPERIMEN.md](docs/TEMUAN_DAN_EKSPERIMEN.md) | Temuan, eksperimen, kasus gagal, dan bug tercatat |
+| [docs/KLASIFIKASI_MATERI.md](docs/KLASIFIKASI_MATERI.md) | Klasifikasi hasil RevCore vs referensi vs berkas pihak lain |
+| [docs/STATUS_PENGUJIAN.md](docs/STATUS_PENGUJIAN.md) | Status fungsi menurut laporan pemilik dan kosakata status |
 | [docs/ROM_ANALYSIS.md](docs/ROM_ANALYSIS.md) | Analisis ROM read-only, checksum, dan diff blok |
 | [docs/STORAGE_AND_LOGS.md](docs/STORAGE_AND_LOGS.md) | Layout penyimpanan, penamaan berkas, dan session log |
 | [docs/DATASET_CONTRIBUTION.md](docs/DATASET_CONTRIBUTION.md) | Cara menambah kendaraan, profil, dan MAP |
@@ -359,4 +374,4 @@ Developer boleh mengajukan permintaan berkas atau mengusulkan isi repository yan
 
 Baca [CONTRIBUTING.md](CONTRIBUTING.md) dan [NOTICE.md](NOTICE.md). Setiap kontribusi harus menjaga label bukti (`ORIGINAL`, `DECOMPILED`, `RECONSTRUCTED`, `REFERENCE`, `UNVERIFIED`), tidak mengarang hasil pengujian, dan tidak memasukkan materi terlarang.
 
-Rilis `v0.3.0` disiapkan berdasarkan perintah rilis akhir pemilik. Gate yang masih menjadi batas publikasi adalah hal teknis, bukan persetujuan: tanpa katalog Live Data proprietary, tanpa UI/Application Layer, tanpa Security/Integrity, tanpa materi pihak ketiga yang haknya belum terbukti, dan tanpa klaim pengujian kendaraan.
+Rilis `v0.3.0` disiapkan berdasarkan perintah rilis akhir pemilik. Batas publikasi yang masih berlaku adalah hal teknis, bukan persetujuan: tanpa UI/Application Layer, tanpa komponen keamanan internal dan mekanismenya, tanpa kredensial/data pribadi, dan tanpa berkas mentah pihak lain yang hak publikasinya belum jelas. Hasil analisis, database kendaraan, profil ECM, inventaris MAP, tabel Live Data, rumus, dokumentasi protokol, dan temuan eksperimen RevCore **termasuk** cakupan publikasi. Tidak ada klaim pengujian kendaraan tanpa bukti fisik.

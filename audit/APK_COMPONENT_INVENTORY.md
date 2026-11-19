@@ -77,15 +77,14 @@ Tidak ada library protokol native pihak ketiga pada build ini. Implementasi K-Li
 
 | Aset | Ukuran (byte) | Keputusan publikasi |
 |---|---:|---|
-| `assets/ecm_database.json` | 748.580 | Tidak dipublikasikan; diganti 3 record sintetis |
-| `assets/<profil pihak ketiga>.json` | 127.269 | Tidak dipublikasikan; hak redistribusi belum terbukti |
-| `assets/<MAP pihak ketiga>/` | 162 `.map` + `manifest.tsv` | Tidak dipublikasikan; materi pihak ketiga |
-| `assets/integrity_policy.json` | 37.630 | Tidak dipublikasikan; Security/Integrity |
-| `assets/ui_integrity_manifest.json` | 12.550 | Tidak dipublikasikan; Security/Integrity |
+| `assets/ecm_database.json` | 748.580 | Aset build internal; build publik memakai 3 record sintetis. Database hasil kompilasi RevCore dipublikasikan terpisah di `data/vehicle_database/` |
+| `assets/<profil pihak ketiga>.json` | 127.269 | Berkas mentah tidak disertakan; profil hasil rekonstruksi RevCore dipublikasikan di `data/vehicle_database/ecm_profiles.json` |
+| `assets/<MAP pihak ketiga>/` | 162 `.map` + `manifest.tsv` | Berkas mentah tidak disertakan (salinan aset pihak lain); inventaris, hash, format, dan analisis dipublikasikan di `data/map_library/` |
+| Aset keamanan internal (2 berkas) | — | Tidak dipublikasikan; nama dan ukuran tidak dicatat |
 | `assets/dexopt/baseline.prof` | 6.405 | Tidak relevan untuk repository |
 | `assets/dexopt/baseline.profm` | 761 | Tidak relevan untuk repository |
 
-Repo staging hanya membawa `core/src/main/assets/ecm_database.json` sintetis (`SAMPLE-ECM-001` sampai `SAMPLE-ECM-003`) dan fixture yang dibuat sendiri. Tidak ada aset APK asli yang disalin ke repository.
+Repo staging hanya membawa `core/src/main/assets/ecm_database.json` sintetis (`SAMPLE-ECM-001` sampai `SAMPLE-ECM-003`) dan fixture yang dibuat sendiri. Tidak ada aset APK asli, berkas MAP, atau firmware yang disalin ke repository. Dataset `data/` berisi hasil kompilasi dan analisis, bukan salinan aset.
 
 ## 7. Manifest: minimum untuk modul publik
 
@@ -130,7 +129,7 @@ Tidak ada `Service` pada manifest. Komunikasi USB berjalan dalam proses dan life
 
 - Inventaris ini tidak membuktikan kompatibilitas dengan ECU atau kendaraan nyata.
 - Keberadaan class, aset, atau string di APK tidak membuktikan bahwa jalur komunikasi telah diuji pada hardware.
-- Detail sertifikat, fingerprint, trust record, dan konfigurasi integritas tidak dicatat.
+- Detail sertifikat, fingerprint, dan konfigurasi integritas tidak dicatat.
 - Angka ukuran dapat berbeda bila alat ZIP menghitung header tambahan; angka di atas berasal dari central directory.
 
 ## 10. Cara memverifikasi ulang

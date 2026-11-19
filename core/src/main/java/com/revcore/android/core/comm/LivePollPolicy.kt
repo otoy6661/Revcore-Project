@@ -4,7 +4,7 @@ package com.revcore.android.core.comm
  * Poll pacing for Live Monitor. The interval is derived from the measured
  * transaction duration instead of a copied constant, and repeated failures back
  * off to a bounded stop. [MIN_INTERVAL_MS] keeps the existing 150 ms baseline
- * floor; it is not derived from HDiag.
+ * floor; it is not derived from any public reference implementation.
  */
 object LivePollPolicy {
     const val MIN_INTERVAL_MS = 150L

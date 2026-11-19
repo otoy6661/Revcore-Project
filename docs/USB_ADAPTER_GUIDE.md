@@ -1,5 +1,9 @@
 # PANDUAN ADAPTER USB
 
+> **STATUS: DALAM TAHAP ANALISIS DAN PENGUJIAN**
+>
+> Tidak seluruh informasi telah dikonfirmasi melalui pengujian hardware. Informasi diperoleh dari beberapa sumber publik dan dikembangkan lebih lanjut melalui pengujian, analisis, serta eksperimen RevCore.
+
 Dokumen ini menjelaskan penanganan adapter USB pada `:core`: chipset yang dikenali, urutan membuka port, perbedaan transport library dan driver FTDI native, serta batas pengujian.
 
 ## 1. Dua jalur transport

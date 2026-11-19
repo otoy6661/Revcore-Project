@@ -8,8 +8,9 @@ Dokumen ini mencatat pemeriksaan keamanan dan kebersihan materi pada staging rep
 |---|---|---|
 | Communication Engine, USB/serial, K-Line, Protocol Engine, DTC, Live Data | Ya | Ya |
 | Application Layer (UI, navigasi, state, lifecycle aplikasi) | Hanya batas integrasi | Tidak |
-| Security/Integrity (verifikasi APK, signature, hash, trust record, gate startup) | Hanya batas integrasi dan pemeriksaan kebocoran | Tidak |
-| Database ECM lengkap, MAP/profil pihak ketiga, firmware | Hanya pemeriksaan ketidakhadiran | Tidak |
+| Komponen keamanan internal | Hanya batas integrasi dan pemeriksaan kebocoran | Tidak |
+| Database kendaraan, profil ECM, inventaris MAP, tabel Live Data hasil pengembangan | Ya | Ya; berkas mentah pihak lain tidak |
+| Berkas MAP mentah, firmware, BIN/ROM pihak lain, kunci kontainer | Hanya pemeriksaan ketidakhadiran | Tidak |
 | Kredensial, keystore, token, sertifikat signing | Hanya pemeriksaan ketidakhadiran | Tidak |
 
 Application Layer dan Security/Integrity dianalisis secara internal seperlunya, tetapi source, diagram, catatan implementasi, dan dokumentasi khususnya berada di luar repository ini. Catatan internal disimpan di direktori kerja privat yang terpisah.
@@ -30,7 +31,7 @@ Pemeriksaan dijalankan pada seluruh berkas repository, tidak termasuk direktori 
 | Private key, keystore, sertifikat | Pola `BEGIN ... PRIVATE KEY`, `keystore`, `.jks`, `.p12`, `.pfx`, `.pepk` | Tidak ada nilai rahasia; hanya teks larangan di dokumentasi |
 | Password, token, API key, secret | Pola `password=`, `token`, `api_key`, `secret=` | Tidak ada kredensial; hanya teks larangan |
 | Path pengguna | Pola `C:\Users`, `/Users/` | Tidak ada |
-| Package terlarang | `com.revcore.android.security`, `.ui`, `.tuning`, `.storage` | Tidak ada source; hanya penyebutan tekstual di dokumen |
+| Package terlarang | Package internal Application Layer dan Security | Tidak ada source; hanya pernyataan batas di dokumen |
 | Artefak biner | `.apk`, `.aab`, `.aar`, `.jar`, `.map`, `.so`, `.dex`, `.bin` | Tidak ada di luar cache/build |
 | Database kendaraan | Isi `ecm_database.json` | Hanya `SAMPLE-ECM-001/002/003` |
 | Data pribadi | Nama, nomor telepon, email, ID perangkat | Tidak ada |
@@ -67,9 +68,11 @@ Hasil yang diharapkan dan diperoleh: tidak ada nilai rahasia, tidak ada path pen
 |---|---|---|
 | APK dan isinya | Tidak disalin | Hanya dianalisis lokal |
 | Library protokol native pihak ketiga | Tidak disertakan | Alamat/konstanta hasil analisis ditandai `RECONSTRUCTED`/`REFERENCE` |
-| Profil pihak ketiga dan 162 `.map` | Tidak disertakan | Hak redistribusi belum terbukti |
-| Katalog Live Data bawaan | Ditarik | Hak penggunaan belum jelas; hanya parser generik dan contoh 0x7A |
-| `ecm_database.json` asli | Tidak disertakan | Diganti data sintetis |
+| Profil ECM hasil rekonstruksi RevCore | Dipublikasikan | `data/vehicle_database/ecm_profiles.json`; tanpa resource mentah |
+| Berkas mentah 162 `.map` | Tidak disertakan | Salinan aset pihak lain; inventaris, hash, dan analisis dipublikasikan |
+| Kunci dan IV kontainer MAP | Tidak dipublikasikan | Mekanisme kripto internal |
+| Tabel Live Data hasil rekonstruksi RevCore | Dipublikasikan | `data/live_data/live_tables.json`; layout program lain tidak |
+| `ecm_database.json` bawaan APK | Tidak disalin | Build memakai data sintetis; database kompilasi dipublikasikan di `data/` |
 | `mapping.txt`, `seeds.txt` | Tidak disertakan | Memuat nama internal |
 | Teks lisensi pihak ketiga | Tidak disalin | Kewajiban notice dicatat di [DEPENDENCY_AUDIT.md](DEPENDENCY_AUDIT.md) |
 
@@ -77,7 +80,7 @@ Hasil yang diharapkan dan diperoleh: tidak ada nilai rahasia, tidak ada path pen
 
 | Risiko | Tingkat | Tindakan |
 |---|---|---|
-| Konstanta Live Data pihak ketiga | Rendah | Katalog bawaan kosong; materi telah ditarik |
+| Layout Live Data dari program lain | Rendah | Hanya tabel hasil rekonstruksi RevCore; layout asing tidak disertakan |
 | Alamat binary dan nama modul di `Evidence.kt` | Rendah–menengah | Pemilik memutuskan apakah alamat perlu disanitasi |
 | Ketergantungan pada JitPack untuk `usb-serial-for-android` | Rendah | Versi dikunci; pemilik dapat menyimpan artefak |
 | Log komunikasi dapat memuat data adapter/frame | Rendah | Jangan mengekspor log mentah tanpa peninjauan; tidak ada data pribadi yang dikumpulkan kode |
@@ -88,9 +91,10 @@ Hasil yang diharapkan dan diperoleh: tidak ada nilai rahasia, tidak ada path pen
 
 - Jangan menambahkan keystore, private key, token, password, atau kredensial ke issue, test, contoh, log, atau commit.
 - Jangan mengunggah APK atau materi analisis ke layanan eksternal.
-- Jangan menambahkan database kendaraan, MAP, firmware, atau materi pihak ketiga tanpa hak yang terbukti.
+- Jangan menambahkan berkas MAP/firmware/BIN mentah milik pihak lain tanpa hak yang terbukti.
 - Laporkan dugaan kebocoran atau pelanggaran hak kepada pemilik dan jangan mempublikasikannya.
+- Hasil analisis, database, profil, inventaris, dan tabel Live Data hasil pengembangan RevCore boleh dipublikasikan sesuai Work Order 19 November 2026.
 
 ## 8. Kesimpulan
 
-Tidak ditemukan kredensial, path pribadi, source Application/Security, atau artefak terlarang di staging repository. Katalog Live Data pihak ketiga telah ditarik. Satu hal masih memerlukan keputusan pemilik: sanitasi alamat binary dan nama modul di `Evidence.kt`. Repository belum dipublikasikan dan belum di-ZIP.
+Tidak ditemukan kredensial, path pribadi, source Application/Security, atau artefak terlarang di repository. Dataset hasil pengembangan RevCore ada di `data/`; layout tabel dari program lain, berkas mentah pihak lain, dan kunci kontainer tidak disertakan. Satu hal masih memerlukan keputusan pemilik: sanitasi alamat binary dan nama modul di `Evidence.kt`. Revisi 2026-11-19 belum di-commit, belum di-ZIP, dan belum di-push sampai instruksi eksekusi pemilik.

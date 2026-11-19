@@ -55,12 +55,14 @@ MAP ke repository tanpa melanggar hak pihak ketiga dan tanpa mengarang bukti.
 
 ## 6. Materi yang dilarang
 
-- Database ECM lengkap milik RevCore atau pihak ketiga.
-- MAP/profil/firmware pihak ketiga tanpa hak redistribusi.
-- Firmware ECU, bootloader, atau binary ROM.
+- Berkas MAP, BIN, ROM, atau firmware yang merupakan salinan aset pihak lain tanpa hak distribusi.
+- Kunci, IV, dan mekanisme kripto kontainer MAP.
 - Keystore, private key, token, password, atau API key.
 - Data pribadi atau data kendaraan yang dapat diidentifikasi.
 - Source Application Layer atau Security/Integrity.
+- Layout tabel Live Data dari program lain.
+
+Database, profil, inventaris MAP, tabel Live Data, rumus, dan temuan hasil pengembangan RevCore **boleh** dikontribusikan. Tandai status bukti dengan jujur; jangan menahan hasil analisis sendiri hanya karena hak pihak ketiga belum jelas.
 
 ## 7. Proses peninjauan
 

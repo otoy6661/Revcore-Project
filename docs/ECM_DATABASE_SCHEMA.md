@@ -1,8 +1,14 @@
 # SKEMA DATABASE ECM
 
+> **STATUS: DALAM TAHAP ANALISIS DAN PENGUJIAN**
+>
+> Tidak seluruh informasi telah dikonfirmasi melalui pengujian hardware. Informasi diperoleh dari beberapa sumber publik dan dikembangkan lebih lanjut melalui pengujian, analisis, serta eksperimen RevCore.
+
 Dokumen ini menjelaskan format `ecm_database.json` yang dibaca `:core`. Skema ini generik.
-Repository publik hanya berisi record sintetis berawalan `SAMPLE-`; database kendaraan
-sebenarnya tidak dipublikasikan.
+Aset bawaan `:core` hanya berisi record sintetis berawalan `SAMPLE-`; database hasil
+kompilasi RevCore (489 record, status `terdaftar`) dipublikasikan terpisah di
+[`data/vehicle_database/ecm_database.json`](../data/vehicle_database/ecm_database.json)
+dan tidak dimuat otomatis oleh pustaka.
 
 ## 1. Lokasi dan bentuk berkas
 

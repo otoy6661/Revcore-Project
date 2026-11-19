@@ -1,5 +1,9 @@
 # LIVE DATA ENGINE
 
+> **STATUS: DALAM TAHAP ANALISIS DAN PENGUJIAN**
+>
+> Tidak seluruh informasi telah dikonfirmasi melalui pengujian hardware. Informasi diperoleh dari beberapa sumber publik dan dikembangkan lebih lanjut melalui pengujian, analisis, serta eksperimen RevCore.
+
 Dokumen ini menjelaskan mesin Live Data generik di `:core`: bagaimana tabel dipilih,
 dipolling, di-cache, dan bagaimana parameter yang tidak tersedia dilaporkan.
 
@@ -18,9 +22,11 @@ object HondaLiveDataProfiles {
 }
 ```
 
-Alasannya: tabel, request frame, offset, dan skala Live Data Honda yang pernah dianalisis
-tidak memiliki status hak penggunaan yang jelas. Materi itu ditarik dari repository publik
-sampai statusnya diselesaikan dan nilainya dikonfirmasi oleh tangkapan perangkat keras.
+Alasannya: katalog bawaan sengaja kosong agar `:core` tidak mengirim frame tanpa
+persetujuan pemanggil. Tabel hasil rekonstruksi RevCore tetap dipublikasikan sebagai data
+di [LIVE_DATA_REFERENCE.md](LIVE_DATA_REFERENCE.md) dan `data/live_data/live_tables.json`;
+semuanya berstatus `RECONSTRUCTED` dan belum diverifikasi oleh tangkapan perangkat keras.
+Pemanggil mendaftarkannya secara eksplisit untuk mengaktifkan polling.
 
 Konsekuensi perilaku:
 
