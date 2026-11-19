@@ -1,0 +1,23 @@
+# Build output
+build/
+.gradle/
+local.properties
+out/
+*.class
+*.apk
+*.aab
+*.aar
+
+# IDE
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Signing material — never commit
+*.keystore
+*.jks
+signing.properties
+keystore.properties

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "catatan": "Seluruh record di berkas ini SINTETIS. Tidak ada merek, model, atau identitas kendaraan nyata.",
+  "vehicles": [
+    {
+      "id": "contoh-motor-a",
+      "displayName": "Contoh Motor A",
+      "family": "contoh-baseline",
+      "ecuIdPattern": "SIM-A-0001",
+      "notes": "Record contoh untuk latihan; bukan kendaraan nyata."
+    },
+    {
+      "id": "contoh-motor-b",
+      "displayName": "Contoh Motor B",
+      "family": "contoh-baseline",
+      "ecuIdPattern": "SIM-B-0002",
+      "notes": "Record contoh dengan keluarga yang sama dengan Motor A."
+    },
+    {
+      "id": "contoh-motor-c",
+      "displayName": "Contoh Motor C",
+      "family": "contoh-family-lain",
+      "ecuIdPattern": "SIM-C-0003",
+      "notes": "Keluarga berbeda; katalog DTC masih kosong."
+    }
+  ]
+}

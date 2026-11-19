@@ -1,0 +1,13 @@
+{
+  "family": "contoh-baseline",
+  "title": "Profil contoh sintetis untuk latihan parser",
+  "identityRequests": ["72 05 71 00 18"],
+  "dtcReadRequests": ["72 05 74 01 14", "72 05 71 20 F8", "72 05 00 00 89"],
+  "dtcClearRequests": ["72 05 60 01 28", "72 05 74 02 13", "72 04 04 86"],
+  "liveFields": [
+    { "name": "CONTOH_MAP", "offset": 0, "length": 1, "scale": 1, "correction": 0, "unit": "kPa" },
+    { "name": "CONTOH_SUHU", "offset": 1, "length": 1, "scale": 1, "correction": -40, "unit": "C" }
+  ],
+  "verified": false,
+  "notes": null
+}
